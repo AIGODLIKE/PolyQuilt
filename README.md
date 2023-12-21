@@ -1,110 +1,113 @@
-I am currently working on an English document. [Click here](https://github.com/sakana3/PolyQuilt/releases/download/1.3.1/PolyQuilt_v1.3.1.zip) to download the latest version.  
-If you are using Blender2.82 and earlier. [Click here](#OldVersion)
+# PolyQuilt
 
-# PolyQuilt(ポリキルト)
+> This is a fix version fork from https://github.com/sakana3/PolyQuilt
+
+> Since sakana3 hasn't been updated for a long time, but again this is a very good plugin, I decided to maintain a version myself
+
+> The main tool has been adapted to the blender 4.0 version (and the old
+> version is no longer maintained), but other tools have not been tested, if there is any problem, please issue it
 ---
-PolyQuiltはローポリモデリングをサポートするBlender2.8用アドオンです。シンプルでオーソドックスでオールドスクールな面張り機能に加えてドラッグや長押し等のマウスオペレーションに様々な機能を割り振ることでツールの切り替えを最小限にしてポリゴンモデリングを支援します。
-またタブレットやデジタイザ付きタブレットPCとの相性も良く、操作量を減らしつつ直感的にモデリングを行う事ができます。
+PolyQuiltis an add-on for Blender 4.0 that supports low-poly modeling. In addition to simple, orthodox, and old-school
+face-to-face functions, various functions are assigned to mouse operations such as dragging and long-pressing,
+minimizing tool switching and supporting polygon modeling.
+It is also compatible with tablets and tablet PCs with digitizers, and can be modeled intuitively while reducing the
+amount of operation.
 
-# 導入方法
+# Features
 
-最新版ダウンロードは[こちら](https://github.com/sakana3/PolyQuilt/releases/download/1.3.1/PolyQuilt_v1.3.1.zip)から（Blender2.83 LTS以降）  
-Blender2.82以前の方は[こちら](#OldVersion)から  
+Various functions are assigned to click, drag, press and hold, and press and hold drag operations. The following
+functions are allocated in combination with space, point, and edge elements.
+Alt is equivalent to holding. Alt key double-click to lock long press.
 
-ダウンロードして編集→設定→アドオン→インストールよりダウンロード先を指定してインストールしてください。インストールした段階ではまだ使えませんのでその後検索バーよりPolyQuiltを検索しチェックボックスをOnにしてください。
+|       |                             Click                              |            Drag             |    Hold     |                    Hold Drag                    | 
+|:-----:|:--------------------------------------------------------------:|:---------------------------:|:-----------:|:-----------------------------------------------:|
+| space |     [Create Vertices]  <br>→ [Facelift]  <br>→ [Loop Cut]      | View Rotation (Provisional) |             |                     [Knife]                     ||
+| point |                           [Facelift]                           |         Move (Join)         | Delete/Melt |          [Fan Cut]  <br>Edge Extrusion          |
+| edge  |                   Vertex Insertion → Surface                   |           [Move]            | Delete/Melt | Loop Insertion  <br>Edge Extrusion <br>Loop Cut |
+| face  |                                                                |           [Move]            |  [removed]  |                                                 |
 
-編集モードに入るとPolyBuildの下にアイコンが追加されているのでこれをクリックでPolyQuiltがアクティブツールになります。
-
-# 機能一覧
-
-各種機能はクリック、ドラッグ、長押し、長押し後ドラッグの操作に割り振られています。空間、点辺面の要素との組み合わせで以下の機能が割り振られています。
-Altでホールドと同等の動作になります。Altキーダブルクリックで長押しをロックします。
-
-||クリック|ドラッグ|ホールド|ホールドドラッグ| 
-|:-:|:-:|:-:|:-:|:-:|
-|空間|[頂点作成](#頂点作成)<br>→[面張り](#面張り)<br>→[ループカット](#ループカット)|ビュー回転(暫定)||[ナイフ](#ナイフ)||
-|点|[面張り](#面張り)|[移動(結合)](#移動)|[削除/融解](#削除/融解)|[扇カット](#扇カット)<br>[エッジ押し出し](#エッジ押し出し)|
-|辺|[頂点挿入→面張り](#面張り)|[移動](#移動)|[削除/融解](#削除/融解)|[ループ挿入](#ループ挿入)<br>[エッジ押し出し](#エッジ押し出し)<br>[ループカット](#ループカット)|
-|面||[移動](#移動)|[削除](#削除/融解)||
-
-|Shiftを押しながら| 機能 |
-|:-:|:-:|
-|Shift + クリック| AutoQuad |
-|Shift + ドラッグ| Brush |
-|Shift + ミドルボタン＋ドラッグ| 2ndBrush |
-|Shift + ホールドドラック| ブラシサイズ/強度 +/- |
-|Shift + Wheel Up/ Down| ブラシサイズ +/- |
-|Shift + Ctrl + Wheel Up/ Down| ブラシ強度 +/- |
+|   Hold down Shift and press   |        Function         |
+|:-----------------------------:|:-----------------------:|
+|         Shift + Click         |        AutoQuad         |
+|         Shift + Drag          |          Brush          |
+| Shift + Middle Button + Drag  |        2ndBrush         |
+|       Shift + Hold Drag       | Brush Size/Strength +/- |
+|    Shift + Wheel Up/ Down     |     Brush Size +/-      |
+| Shift + Ctrl + Wheel Up/ Down |   Brush Strength +/-    |
 
 ---
-## 移動  
 
-点、線、面の上でマウスドラッグでビュー平面状の移動ができます。エッジの頂点は別エッジの頂点に近づける事で結合する事ができます。
+## Move
 
-## 頂点作成
-何もない空間をクリックで頂点が作成されます。通常はそのまま面張りモードになりますがジオメトリを点モードにすれば連続で点を作れます。
+You can move the view plane by dragging the mouse over a point, line, or face. The vertices of an edge can be combined
+by bringing them closer to the vertices of another edge.
 
-## 面張り
+## Vertex Creation
 
-何もないエリアか点の上でクリックで面張りを開始します。クリックする度に点、線、面が追加されます。最後に配置した点の上でクリック(ダブルクリックと同意)か右クリックで終了しまた新たな面を作ることができます。
+Clicking on an empty space creates vertices. Normally, it will be in surface mode as it is, but if you set the geometry
+to point mode, you can create points continuously.
 
-画面上部のツールメニューより作成するジオメトリを点、線、三角形、四角形、ポリゴンから選ぶ事ができます。
+## Face Upholstery
 
-また同一面の頂点でクリックすると面の分断になります。  
+Click on an empty area or point to start the surface. Each click adds a point, line, or area. You can click (agree with
+double-click) or right-click on the last point you have placed to create a new face.
 
-## 削除/融解
+From the tool menu at the top of the screen, you can choose from points, lines, triangles, squares, and polygons to
+create geometry.
 
-点、線、面の上で長押しでその要素を消去or融解します。共有する線や面がある場合は融解、そうでない場合は削除になります。
+Also, if you click at the vertex of the same face, the face will be divided.
 
-## ナイフ
+## Removal/Melting
 
-空間で長押し後にドラッグでナイフを実行できます。
+Press and hold on a point, line, or face to erase or melt that element. If there are lines or surfaces to share, they
+will be melted, otherwise they will be deleted.
 
-## ループカット
+## Knife
 
-辺の上で長押し後ドラッグで辺をループカットできます。
+You can execute the knife by dragging after a long press in space.
 
-## 扇カット
+## Loop Cuts
 
-点の上で長押し後ドラッグで辺を扇状にループカットできます。
+You can press and hold on the edge, and then drag to loop the edge.
 
-## エッジ押し出し
+## Fan cut
 
-辺または点の上で長押し後ドラッグでエッジの押し出しをします。
+After pressing and holding on the dot, you can cut the edges in a fan shape loop by dragging.
 
-## ループ挿入
+## Edge extrusion
 
-辺ループを挿入します
+Press and hold on a side or point, then drag to extrude the edge.
 
-## ループカット
+## Loop Insertion
 
-辺ループをカットします
+Insert an edge loop
 
-# 環境設定
+## Loop Cuts
 
-ドキュメント準備中
+Cut the side loops
 
 ## Extra Setting
-特別な設定群です。上級者向け
 
-### Check PolyQuilt add-on update 
+This is a special set of settings. For advanced users
 
-ポリキルトを更新をチェックし最新版にアップデートする事ができます。上手くいかない場合は従来通りの方法でお願いします。
+### Check PolyQuilt add-on update
 
-### ゲームエンジン風キーマップをセットアップ
+You can check for updates to the polyquilt and update it to the latest version. If it doesn't work, please do it the
+same way as before.
 
-右マウスボタン＋ドラッグでの視点変更にキーマップをセットアップします。標準で割り振られているコンテキストメニューはクリックで開く為、操作が被る事なくUnityやUE4といった主要ゲームエンジン風の操作を行う事ができます。キーマップを書き換える為、独自カスタムや他のアドオンとの衝突する場合があるので注意してください。
+### Set up a game engine-style keymap
 
-# フィードバック
+Set up a keymap to change the viewpoint with the right mouse button + drag. The default context menu is opened by
+clicking, so you can perform operations like major game engines such as Unity and UE 4 without being affected. Please
+note that since the keymap is rewritten, it may conflict with your own custom or other add-ons.
 
-フィードバックはGithubの[Issues](https://github.com/sakana3/PolyQuilt/issues)かTwitterアカウント[sakana3](https://twitter.com/sakanaya) まで宜しくお願い致します。
+# Feedback
 
-# 実装予定
+# To be implemented
 
-- [ ] 分離(Rip)
-- [ ] LoopCutの末端三角形対応
-- [ ] 選択
-- [x] ハンドリトポ編集
+- [ ] Separation (Rip)
+- [ ] LoopCut support for terminal triangles
+- [ ] Select
+- [x] Hand litopo editing
 
-# OldVersion
-For Blender2.82 and earlier. [Click here](https://github.com/sakana3/PolyQuilt/releases/download/1.2.0/PolyQuilt_v1.2.0.zip)
+
