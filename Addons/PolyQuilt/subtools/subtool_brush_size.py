@@ -55,7 +55,9 @@ class SubToolBrushSize(SubToolEx) :
 
         elif event.type == self.rootTool.buttonType : 
             if event.value == 'RELEASE' :
-                bpy.context.window.cursor_warp( self.PressPrevPos.x , self.PressPrevPos.y )
+                x = int(self.PressPrevPos.x)
+                y = int(self.PressPrevPos.y)
+                bpy.context.window.cursor_warp(x, y)
                 return 'FINISHED'
 
         return 'RUNNING_MODAL'

@@ -72,7 +72,7 @@ class MainToolEdgeLoopDissolve(MainTool) :
 
     def OnDraw3D( self , context  ) :
         if self.currentTarget.isEdge :        
-            alpha = self.preferences.highlight_face_alpha
+            alpha = 1
             vertex_size = self.preferences.highlight_vertex_size        
             width = self.preferences.highlight_line_width        
             color = self.preferences.delete_color         

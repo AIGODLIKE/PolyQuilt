@@ -87,7 +87,7 @@ class SubToolSeam(MainTool) :
 
     def OnDraw3D( self , context  ) :
         if self.removes[0] :
-            alpha = self.preferences.highlight_face_alpha
+            alpha = 1
             vertex_size = self.preferences.highlight_vertex_size        
             width = 5        
             if all( isinstance( e , bmesh.types.BMEdge ) and e.seam for e in self.removes[0] )  :

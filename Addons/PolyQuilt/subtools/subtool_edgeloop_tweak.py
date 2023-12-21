@@ -135,7 +135,7 @@ class SubToolEdgeLoopTweak(MainTool) :
                 draw_util.draw_circle2D( pos , size , (1,1,1,1) , False )
 
     def OnDraw3D( self , context  ) :
-        alpha = self.preferences.highlight_face_alpha
+        alpha = 1
         vertex_size = self.preferences.highlight_vertex_size        
         width = self.preferences.highlight_line_width
         color = self.preferences.highlight_color

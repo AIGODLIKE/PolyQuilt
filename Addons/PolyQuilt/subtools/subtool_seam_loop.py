@@ -68,9 +68,9 @@ class SubToolSeamLoop(SubToolSeam) :
         if element.isEdge and gizmo.bmo != None :
             edges = cls.find_seam_loop( gizmo.bmo , element.element )
             if edges :
-                alpha = gizmo.preferences.highlight_face_alpha
+                alpha = 1
                 vertex_size = gizmo.preferences.highlight_vertex_size        
-                width = 5        
+                width = 1.65
                 if not element.element.seam :
                     color = bpy.context.preferences.themes["Default"].view_3d.edge_seam
                     color = (color[0],color[1],color[2],1)
