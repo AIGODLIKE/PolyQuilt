@@ -164,7 +164,7 @@ class VIEW3D_PT_tools_polyquilt_options( Panel):
         layout.label( text = "Extrude" )
         layout.prop(props, "extrude_mode" , text = "EXTRUDE" , expand = True )
 
-        layout.label( text = "LOOPCUT" )
+        layout.label( text = "Loop Cut" )
         layout.prop(props, "loopcut_mode" , text = "LOOPCUT" , expand = True )
         col = layout.column()              
         col.label( text = "Edge Snap Div" )        
