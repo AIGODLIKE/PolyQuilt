@@ -21,7 +21,7 @@ data = {
     'Knife': '刀',
     'LoopCut': '环切',
     'Brush_Delete': '笔刷删除',
-    'Space Drag Operation': '空格拖动操作',
+    'Space Drag Operation': '空处拖动操作',
     'Loop Cut': '环切',
     'Dissolve Loop': '溶解环',
     'Make Polygon': '创建多边形',
