@@ -107,7 +107,7 @@ def draw_points2D( poss , radius , color = (1,1,1,1) ):
     gpu.state.blend_set("ALPHA")
     shader2D.bind()
     shader2D.uniform_float("color", color )
-    gpu.state.point_size_set(radius * 2)
+    gpu.state.point_size_set(display.dot( radius ))
     batch_draw(shader2D, 'POINTS', {"pos": poss} )
     gpu.state.point_size_set(1)
     gpu.state.blend_set("NONE")
@@ -168,16 +168,22 @@ def draw_lines3D(context, verts, color=(1, 1, 1, 1), width: float = 1.0, hide_al
 
 def draw_Poly3D(context, verts, color=(1, 1, 1, 1), hide_alpha=0.5):
     polys = mathutils.geometry.tessellate_polygon((verts,))
-    shader3D.bind()
     gpu.state.blend_set("ALPHA")
+    shader3D.bind()
     shader3D.uniform_float("color", color)
     batch_for_shader(shader3D, 'TRIS', {"pos": verts}, indices=polys).draw(shader3D)
+    gpu.state.blend_set("NONE")
 
 def draw_pivots3D( poss , radius , color = (1,1,1,1) ):
+    gpu.state.point_size_set(display.dot( radius ))
+    gpu.state.blend_set("ALPHA")
+
     shader3D.bind()
     shader3D.uniform_float("color", color)
     batch_draw(shader3D, 'POINTS', {"pos": poss} )
 
+    gpu.state.point_size_set(1)
+    gpu.state.blend_set("NONE")
 
 
 def draw_Face3D( obj , bm : bmesh.types.BMesh , face : bmesh.types.BMFace , color = (1,1,1,1) , isFill = True ):
