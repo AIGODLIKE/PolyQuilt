@@ -33,6 +33,7 @@ data = {
     'Edge Divide': '边缘分割',
     'Edge Slide': '边缘滑动',
     'Edge Offset': '边缘偏移',
+    'Marker Size':'标记尺寸',
 
     "View3D > Edit Mode > Tool:PolyQuilt": "3D视图 > 编辑模式 > 工具:PolyQuilt",
     'Lowpoly Tool': '低多边形工具',
@@ -59,5 +60,8 @@ data = {
     'Brush Type': '笔刷类型',
     'Keymap Setting': '键盘映射设置',
     'Extra Settings': '额外设置',
+
+    'Select Box': '框选',
+    'Select Lasoo': '套索选择',
 
 }

@@ -312,9 +312,9 @@ class PolyQuiltPreferences(AddonPreferences):
         row = box.row()
         row.label(text="Highlight Face Alpha", icon = 'FACESEL' )
         row.prop(self, "highlight_face_alpha" , text = "Alpha" )
-        row = box.row()
-        row.label(text="Marker Size" )
-        row.prop(self, "marker_size" , text = "Size" )
+        # row = box.row()
+        # row.label(text="Marker Size" )
+        # row.prop(self, "marker_size" , text = "Size" )
 
         row = box.row()
         row.label(text="Space Drag Operation" )
