@@ -367,13 +367,13 @@ class ElementItem :
             p1 = self.__qmesh.local_to_world_pos( center )  
             p2 = self.__qmesh.local_to_world_pos( center + self.element.normal * self.element.calc_perimeter() / len(self.element.edges) / 2 )  
             def draw_face_marker():                
-                draw_util.draw_pivots3D( [pos] , dist if is_hit else dist * 0.7 , ( color[0] , color[1] , color[2] , 1 if is_hit else 0.5 ) )
+                draw_util.draw_pivots3D( [pos,] , dist if is_hit else dist * 0.7 , ( color[0] , color[1] , color[2] , 1 if is_hit else 0.5 ) )
                 draw_util.draw_lines3D( bpy.context , [ p1 , p2 ] , color )
 
             return draw_face_marker
         else :
             def draw_face_marker():                
-                draw_util.draw_pivots3D( [pos] , dist if is_hit else dist * 0.7 , ( color[0] , color[1] , color[2] , 1 if is_hit else 0.5 ) )
+                draw_util.draw_pivots3D( [pos,] , dist if is_hit else dist * 0.7 , ( color[0] , color[1] , color[2] , 1 if is_hit else 0.5 ) )
             return draw_face_marker
 
     def draw_edge_extrude_marker( self , size , v0 , v1 ) :

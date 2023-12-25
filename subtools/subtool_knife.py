@@ -74,7 +74,7 @@ class SubToolKnife(SubTool) :
             self.goalElement.Draw( self.bmo.obj , self.color_highlight() , self.preferences )
 
         if self.cut_edges :
-            draw_util.draw_pivots3D( self.cut_edges.values() , 1 , self.color_delete() )
+            draw_util.draw_pivots3D( list(self.cut_edges.values()) , 1 , self.color_delete() )
             
         if self.cut_edges_mirror :
             draw_util.draw_pivots3D( list(self.cut_edges_mirror.values()) , 1 , self.color_delete(0.5) )
