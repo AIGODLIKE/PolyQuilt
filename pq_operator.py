@@ -327,11 +327,11 @@ class MESH_OT_poly_quilt_base(bpy.types.Operator):
                 font_id = 0  # XXX, need to find out how best to get this.
                 # draw some text
                 blf.position(font_id, 15, 40, 0)
-                blf.size(font_id, 20, 72)
+                blf.size(font_id, 20)
                 blf.draw(font_id, ">>" + self.debugStr )
                 if self.currentSubTool is not None :
                     blf.position(font_id, 15, 20, 0)
-                    blf.size(font_id, 20, 72)
+                    blf.size(font_id, 20)
                     blf.draw(font_id, self.currentSubTool.Active().name +" > " + self.currentSubTool.Active().debugStr )
 
             if self.currentSubTool is not None :
