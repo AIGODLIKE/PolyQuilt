@@ -328,7 +328,7 @@ class PolyQuiltPreferences(AddonPreferences):
         box.row().prop(self, "split_color" , text = "SplitColor" )
         box.row().prop(self, "delete_color" , text = "DeleteColor")
 
-        layout.prop( self, "keymap_setting_expanded", text="Keymap setting",
+        layout.prop( self, "keymap_setting_expanded", text="Keymap Setting",
             icon='TRIA_DOWN' if self.keymap_setting_expanded else 'TRIA_RIGHT')
 
         if self.keymap_setting_expanded :

@@ -15,6 +15,7 @@ import os
 import bpy
 from bpy.types import WorkSpaceTool , Panel
 from bpy.utils.toolsystem import ToolDef
+from bpy.app.translations import pgettext_iface as p_
 from .pq_icon import *
 from .pq_tool_ui import *
 from .pq_keymap_editor import draw_tool_keymap_ui
@@ -65,10 +66,10 @@ class ToolPolyQuiltBase(WorkSpaceTool):
         tools = cls.pq_tools
         if reg == 'UI' :
             draw_settings_ui( cls.pq_operator , context , layout , tool  , ui = tools)
-            draw_tool_keymap_ui( cls.pq_operator , context , layout , cls.pq_description , cls)
+            draw_tool_keymap_ui( cls.pq_operator , context , layout , p_(cls.pq_description) , cls)
         elif reg == 'WINDOW' :
             draw_settings_ui( cls.pq_operator , context , layout , tool  , ui = tools)
-            draw_tool_keymap_ui( cls.pq_operator , context , layout , cls.pq_description , cls )
+            draw_tool_keymap_ui( cls.pq_operator , context , layout , p_(cls.pq_description), cls )
         elif reg == 'TOOL_HEADER' :
             draw_settings_toolheader( cls.pq_operator , context , layout , tool , ui = tools )
 
@@ -140,7 +141,7 @@ class ToolPolyQuiltEdgeLoop(ToolPolyQuiltBase):
     # The prefix of the idname should be your add-on name.
     bl_idname = "mesh_tool.poly_quilt_edgeloop"
     bl_label = "PolyQuilt:EdgeLoop"
-    bl_description = ( "Edgeloop Tool" )
+    bl_description = ( "EdgeLoop Tool" )
     bl_icon = os.path.join(os.path.join(os.path.dirname(__file__), "icons") , "addon.poly_quilt_edgeloop_icon")
     bl_widget = "MESH_GGT_PQ_EdgeLoop"
     bl_keymap = ToolPolyQuiltBase.tool_keymaps( [pq_main_tool] , shift = ['BRUSH'] )
