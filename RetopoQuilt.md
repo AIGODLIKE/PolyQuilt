@@ -1,54 +1,53 @@
 # Reropo Quilt
 
-PolyQUiltとは操作形態が大きく異なるのでRetopQuiltというカテゴリーに分けました。
-将来的にはBlenderにリトポロジーモードが搭載される計画があるのでそちらに統合する予定です。
+Since the operation form is very different from PolyQUilt, we divided it into a category called RetopQuilt.
+In the future, there are plans to include a retopology mode in Blender, so we plan to integrate it there.
 
 ## Quad Patch
-PolyQuiltアイコンのアイコンから利用します。
+It is used from the icon of the PolyQuilt icon.
 
 ---
 
-### 基本操作
+### Basic Operations
 
-- マウス左ボタン＋ドラッグ
-ストロークによるエッジパスを描画します。分割数はオプションの距離により算出されます。また左下の調整パネルから分割数の変更ができます。
+- Left mouse button + drag
+Draw an edge path by stroke. The number of divisions is calculated by the optional distance. You can also change the number of divisions from the adjustment panel at the bottom left.
  
-- エッジ選択状態でマウス左ボタン＋ドラッグ
-選択エッジとストロークの間をブリッジする面を貼ります。スライス分割数はオプションの距離により算出されます。
-また左下の調整パネルから分割数の変更ができます。
-また頂点からのストロークを描くと選択エッジとの接続辺を元にしたクアッドパッチが張られるます。
+- Left mouse button + drag with edge selection
+Apply a surface that bridges between the selection edge and the stroke. The number of slice divisions is calculated by the optional distance.
+You can also change the number of divisions from the adjustment panel at the bottom left.
+Also, if you draw a stroke from a vertex, a quad patch will be stretched based on the connecting edge with the selected edge.
 
-
-### 選択操作 
+### Select operation 
  
-- 辺の上でクリックorドラッグ
-辺の選択を行います。
+- Click or drag on an edge
+Make a selection of edges.
  
-- 選択された辺の端の隣でクリックorドラッグ
-辺の追加選択を行います。
+- Click or drag next to the edge of the selected side
+Make additional selections for the sides.
  
-- 選択された辺の端でクリックorドラッグ
-辺の部分選択解除を行います。
+- Click or drag at the edge of the selected side
+Deselect the edges.
  
-- 辺の上でホールド
-エッジループの選択を行います。
+- Hold on the edges
+Make a selection of edge loops.
  
-- 選択された辺の端でホールド
-エッジサーキットの選択を行います。
+- Hold at the edge of the selected side
+Make a selection of edge circuits.
  
-- 空エリアをクリック
-選択解除
+- Click on an empty area
+Deselect
 
 ### Cooper
 
-Cooperは「樽職人」と言う意味で樽のような輪切りの形状のトポロジーを作るのに使います。
+Cooper means "barrel maker" and is used to create a topology with a barrel-like sliced shape.
 
-- マウス左ボタンホールド＋ドラッグ
-チューブ状のトポロジーをスライスします。スライス分割数はオプションの距離により算出されます。また左下の調整パネルから分割数とオフセットの変更ができます。
+- Left mouse button hold + drag
+Slice the tubular topology. The number of slice divisions is calculated by the optional distance. You can also change the number of divisions and offsets from the adjustment panel at the bottom left.
 
-- エッジ選択状態でマウス左ボタンホールド＋ドラッグ
-選択エッジとスライスされたエッジをブリッジします。また左下の調整パネルからオフセットの変更ができます。
+- Left mouse button hold + drag in edge selection state
+Bridge the selected edge with the sliced edge. You can also change the offset from the adjustment panel at the bottom left.
 
 ### Fill Hole
 
-エッジサーキットが選ばれた状態でホールドで穴をクアッドで埋めます。あまりいい結果にならないと思いますが取りあえずクアッドで塗りつぶしたいときにご利用ください。
+With the edge circuit selected, fill the hole with a quad with a hold. I don't think it will be a very good result, but please use it when you want to fill it with a quad for the time being.

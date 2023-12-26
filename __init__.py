@@ -20,6 +20,7 @@ bl_info = {
     "description": "Lowpoly Tool",
     "warning": "",
     "wiki_url": "",
+    "tracker_url": "https://github.com/atticus-lv/PolyQuilt/issues",
     "category": "Mesh",
 }
 
