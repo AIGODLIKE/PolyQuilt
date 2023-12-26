@@ -60,6 +60,7 @@ data = {
     'Brush Type': '笔刷类型',
     'Keymap Setting': '键盘映射设置',
     'Extra Settings': '额外设置',
+    'Save Keymap': '保存快捷键',
 
     'Select Box': '框选',
     'Select Lasoo': '套索选择',
