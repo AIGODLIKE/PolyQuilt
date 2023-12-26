@@ -2,15 +2,15 @@
 
 **移动笔刷**（普通/透视影响效果不同）
 
-![动画9](res/README/动画9.gif)
+![动画9](res/README/动画9.gif ':size=960')
 
 **平滑笔刷**
 
-![动画10](res/README/动画10.gif)
+![动画10](res/README/动画10.gif ':size=960')
 
 **删除笔刷**（普通/透视影响效果不同）
 
-![动画11](res/README/动画11.gif)
+![动画11](res/README/动画11.gif ':size=960')
 
 # 参数
 
@@ -18,4 +18,4 @@
 
 + 笔刷类型
 
-![image-20231226185316857](res/README/image-20231226185316857.png)
+![image-20231226185316857](res/README/image-20231226185316857.png ':size=720')
