@@ -21,6 +21,7 @@ from gpu_extras.batch import batch_for_shader
 from .pqutil import *
 from .dpi import *
 
+# this shader is used to draw dashed lines
 dot_line_vertex_shader = '''
 uniform mat4 ProjectionMatrix;
 
@@ -34,7 +35,7 @@ void main()
     distance = dist;
 }
 '''
-
+# this shader is used to draw dashed lines
 dot_line_fragment_shader = '''
 uniform vec4 color;
 uniform vec2 line_t;
@@ -54,7 +55,8 @@ void main()
 '''
 
 
-def batch_draw(shader, primitiveType, content, indices=None):
+def batch_draw(shader, primitiveType: str, content: dict, indices: bool = None):
+    """Draw a batch of geometry using a shader."""
     if indices:
         batch = batch_for_shader(shader, primitiveType, content, indices=indices)
     else:
@@ -72,7 +74,9 @@ shader2D = gpu.shader.from_builtin('UNIFORM_COLOR')
 shader3D = gpu.shader.from_builtin('UNIFORM_COLOR')
 
 
-def draw_circle2D(pos, radius, color=(1, 1, 1, 1), fill=False, subdivide=64, dpi=True, width: float = 1.0):
+def draw_circle2D(pos: Vector, radius: float | int, color=(1, 1, 1, 1), fill: bool = False, subdivide: int = 64,
+                  dpi: bool = True, width: float = 1.0):
+    """Draw a circle in 2D space.With custom method"""
     if dpi:
         r = display.dot(radius)
     else:
@@ -98,6 +102,7 @@ def draw_circle2D(pos, radius, color=(1, 1, 1, 1), fill=False, subdivide=64, dpi
 
 
 def draw_donuts2D(pos, radius_out, width, rate, color=(1, 1, 1, 1)):
+    """Draw a donuts in 2D space."""
     r = display.dot(radius_out)
     subdivide = 100
     t = int(max(min(rate, 1), 0) * subdivide)
@@ -108,7 +113,8 @@ def draw_donuts2D(pos, radius_out, width, rate, color=(1, 1, 1, 1)):
     draw_lines2D(vertices, color, display.dot(width))
 
 
-def draw_points2D(poss, radius, color=(1, 1, 1, 1)):
+def draw_points2D(poss: list, radius: float | int, color=(1, 1, 1, 1)):
+    """Draw points in 2D space."""
     gpu.state.blend_set("ALPHA")
     shader2D.bind()
     shader2D.uniform_float("color", color)
@@ -118,7 +124,7 @@ def draw_points2D(poss, radius, color=(1, 1, 1, 1)):
     gpu.state.blend_set("NONE")
 
 
-def draw_lines2D(verts, color=(1, 1, 1, 1), width: float = 1.0):
+def draw_lines2D(verts: list, color=(1, 1, 1, 1), width: float = 1.0):
     region = bpy.context.region
     shader = gpu.shader.from_builtin('POLYLINE_UNIFORM_COLOR')
 
@@ -133,7 +139,7 @@ def draw_lines2D(verts, color=(1, 1, 1, 1), width: float = 1.0):
     gpu.state.blend_set("NONE")
 
 
-def draw_dot_lines2D(verts, color=(1, 1, 1, 1), width: float = 2.0, pattern=(4, 2)):
+def draw_dot_lines2D(verts: list, color=(1, 1, 1, 1), width: float = 2.0, pattern=(4, 2)):
     gpu.state.blend_set("ALPHA")
     gpu.state.line_width_set(display.dot(width))
     shaderEx.bind()
@@ -154,7 +160,7 @@ def draw_dot_lines2D(verts, color=(1, 1, 1, 1), width: float = 2.0, pattern=(4, 
     gpu.state.blend_set("NONE")
 
 
-def draw_poly2D(verts, color=(1, 1, 1, 1)):
+def draw_poly2D(verts: list, color=(1, 1, 1, 1)):
     gpu.state.blend_set("ALPHA")
     shader2D.bind()
     shader2D.uniform_float("color", color)
@@ -176,7 +182,7 @@ def draw_lines3D(context, verts, color=(1, 1, 1, 1), width: float = 1.0, hide_al
     batch.draw(shader)
 
 
-def draw_Poly3D(context, verts, color=(1, 1, 1, 1), hide_alpha=0.5):
+def draw_Poly3D(context, verts: list | tuple, color=(1, 1, 1, 1), hide_alpha=0.5):
     polys = mathutils.geometry.tessellate_polygon((verts,))
     gpu.state.blend_set("ALPHA")
     shader3D.bind()
@@ -185,7 +191,7 @@ def draw_Poly3D(context, verts, color=(1, 1, 1, 1), hide_alpha=0.5):
     gpu.state.blend_set("NONE")
 
 
-def draw_pivots3D(poss, radius, color=(1, 1, 1, 1)):
+def draw_pivots3D(poss: list | tuple, radius: float | int, color=(1, 1, 1, 1)):
     gpu.state.point_size_set(display.dot(radius))
     gpu.state.blend_set("ALPHA")
 
@@ -197,7 +203,8 @@ def draw_pivots3D(poss, radius, color=(1, 1, 1, 1)):
     gpu.state.blend_set("NONE")
 
 
-def draw_Face3D(obj, bm: bmesh.types.BMesh, face: bmesh.types.BMFace, color=(1, 1, 1, 1), isFill=True):
+def draw_Face3D(obj: bpy.types.Object, bm: bmesh.types.BMesh, face: bmesh.types.BMFace, color=(1, 1, 1, 1),
+                isFill: bool = True):
     gpu.state.blend_set("ALPHA")
 
     if isFill:
@@ -217,7 +224,7 @@ def draw_Face3D(obj, bm: bmesh.types.BMesh, face: bmesh.types.BMFace, color=(1, 
     gpu.state.blend_set("NONE")
 
 
-def draw_Edge3D(obj, edge: bmesh.types.BMEdge, color=(1, 1, 1, 1), width=1):
+def draw_Edge3D(obj: bpy.types.Object, edge: bmesh.types.BMEdge, color=(1, 1, 1, 1), width: int | float = 1):
     region = bpy.context.region
     shader = gpu.shader.from_builtin('POLYLINE_UNIFORM_COLOR')
 
@@ -231,12 +238,19 @@ def draw_Edge3D(obj, edge: bmesh.types.BMEdge, color=(1, 1, 1, 1), width=1):
                      {"pos": [obj.matrix_world @ edge.verts[0].co, obj.matrix_world @ edge.verts[1].co]}).draw(shader)
 
 
-def drawElementsHilight3D(obj, bm: bmesh.types.BMesh, elements, radius, width, alpha, color=(1, 1, 1, 1)):
+def drawElementsHilight3D(obj: bpy.types.Object,
+                          bm: bmesh.types.BMesh,
+                          elements:list,
+                          radius: float | int,
+                          width: float | int,
+                          alpha: float,
+                          color=(1, 1, 1, 1)):
     for element in elements:
         drawElementHilight3D(obj, bm, element, radius, width, alpha, color)
 
 
-def drawElementsHilight3DFunc(obj, bm: bmesh.types.BMesh, elements, radius, width, alpha, color=(1, 1, 1, 1)):
+def drawElementsHilight3DFunc(obj: bpy.types.Object, bm: bmesh.types.BMesh, elements:list, radius, width, alpha,
+                              color=(1, 1, 1, 1)):
     funcs = [drawElementHilight3DFunc(obj, bm, e, radius, width, alpha, color) for e in elements]
 
     def func():
@@ -246,7 +260,9 @@ def drawElementsHilight3DFunc(obj, bm: bmesh.types.BMesh, elements, radius, widt
     return func
 
 
-def drawElementHilight3D(obj, bm: bmesh.types.BMesh, element, radius, width, alpha, color=(1, 1, 1, 1)):
+def drawElementHilight3D(obj: bpy.types.Object, bm: bmesh.types.BMesh, element: bmesh.types, radius: float, width: float,
+                         alpha: float,
+                         color=(1, 1, 1, 1)):
     gpu.state.blend_set("ALPHA")
 
     if isinstance(element, bmesh.types.BMVert):
@@ -259,7 +275,9 @@ def drawElementHilight3D(obj, bm: bmesh.types.BMesh, element, radius, width, alp
     gpu.state.blend_set("NONE")
 
 
-def drawElementHilight3DFunc(obj, bm: bmesh.types.BMesh, element, radius, width, alpha, color=(1, 1, 1, 1)):
+def drawElementHilight3DFunc(obj: bpy.types.Object, bm: bmesh.types.BMesh, element: bmesh.types, radius: float, width: float,
+                             alpha: float,
+                             color=(1, 1, 1, 1)):
     matrix_world = copy.copy(obj.matrix_world)
 
     if isinstance(element, bmesh.types.BMVert):
@@ -304,7 +322,8 @@ def drawElementHilight3DFunc(obj, bm: bmesh.types.BMesh, element, radius, width,
     return None
 
 
-def DrawFont(text, size, position, offset=(0, 0)):
+def DrawFont(text: str, size: int, position: list, offset=(0, 0)):
+    """Draw text in 2D space."""
     font_id = 0
 
     blf.size(font_id, int(size * display.pixel_size()))
@@ -337,5 +356,5 @@ class push_pop_projection2D:
         gpu.matrix.pop()
         gpu.matrix.pop_projection()
         if (exc_type != None):
-            # return True  #例外を抑制するには
-            return False  # 例外を伝播する
+            # return True  # To suppress exceptions
+            return False  # Propagate exceptions
