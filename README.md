@@ -1,9 +1,9 @@
 # PolyQuilt
 
 > This is a fix version fork from https://github.com/sakana3/PolyQuilt
-
+> Document[zh_CN]: http://atticus-lv.gitee.io/polyquilt/
+>
 > Since sakana3 hasn't been updated for a long time, but again this is a very good plugin, I decided to maintain a version myself
-
 > The main tool has been adapted to the blender 4.0 version (and the old
 > version is no longer maintained), but other tools have not been tested, if there is any problem, please issue it
 ---

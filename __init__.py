@@ -19,7 +19,7 @@ bl_info = {
     "location": "View3D > Edit Mode > Tool:PolyQuilt",
     "description": "Lowpoly Tool",
     "warning": "",
-    "wiki_url": "http://atticus-lv.gitee.io/polyquilt/",
+    "doc_url": "http://atticus-lv.gitee.io/polyquilt/",
     "tracker_url": "https://github.com/atticus-lv/PolyQuilt/issues",
     "category": "Mesh",
 }
