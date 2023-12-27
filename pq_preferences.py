@@ -342,7 +342,7 @@ class PolyQuiltPreferences(AddonPreferences):
             icon='TRIA_DOWN' if self.extra_setting_expanded
             else 'TRIA_RIGHT')
         if self.extra_setting_expanded :
-            self.draw_updater_ui(layout)
+            # self.draw_updater_ui(layout)
             col = layout.column()
             col.scale_y = 2
             col.operator(PQ_OT_SetupUnityLikeKeymap.bl_idname,

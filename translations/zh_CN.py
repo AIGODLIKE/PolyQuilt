@@ -41,6 +41,7 @@ data = {
     'Delete Tool': '删除工具',
     'Extrude Tool': '挤出工具',
     'Edge Extrude Tool': '边缘挤出工具',
+    'EdgeLoop Extrude': '循环边挤出',
     'EdgeLoop Tool': '循环边工具',
     'QuadPatch Tool': '四边形补丁工具',
     'Brush Tool': '笔刷工具',
