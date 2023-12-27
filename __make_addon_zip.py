@@ -25,6 +25,7 @@ def copy_files() -> Path:
         if file.is_dir():
             if file.name == parent_path.name: continue
             if file.name.startswith('__') or file.name.startswith('.'): continue
+            if file.is_dir() and file.name == 'docs': continue
 
             shutil.copytree(file, sub_dir.joinpath(file.name))
 
@@ -53,6 +54,7 @@ def zip_dir():
     # read bl_info
     bl_info = get_bl_addon_info()
     print(f'Addon name: {bl_info.get("name", "")}')
+    print(f'Version: {bl_info.get("version", "")}')
 
     tg_dir = copy_files()
     final_name = parent_path.name + ' v' + '.'.join([str(num) for num in bl_info['version']]) + '.zip'
@@ -64,9 +66,9 @@ def zip_dir():
         for root, dirs, files in os.walk(tg_dir):
             for file in files:
                 zip.write(os.path.join(root, file), arcname=os.path.join(root, file).replace(str(tg_dir), ''))
-    print(f'Zip file: {zip_file}')
+    print(f'Output: "{zip_file}"')
     shutil.rmtree(tg_dir)
-    print('Remove temp dir')
+    print('Cleaning')
 
 
 if __name__ == '__main__':
