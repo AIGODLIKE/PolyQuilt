@@ -25,6 +25,10 @@ from ..QMesh import *
 from .subtool import SubToolEx
 from ..utils.dpi import *
 
+C_HAND_NOISE = 3 # pixel, consider as noise
+C_CHANGE = 3 # count of change, consider as noise
+
+
 class SubToolBrushSize(SubToolEx) :
     name = "BrushSizeTool"
 
@@ -35,25 +39,49 @@ class SubToolBrushSize(SubToolEx) :
         self.radius = self.start_radius
         self.strength = self.preferences.brush_strength
         self.start_strength = self.strength
-        self.PressPrevPos = mathutils.Vector( (event.mouse_prev_x , event.mouse_prev_y) )    
+        self.PressPrevPos = mathutils.Vector( (event.mouse_prev_x , event.mouse_prev_y) )
+
+        self.mode = None
+        self.changeCount = 0
+    def AttemptChangeMode(self,mode:str):
+        if self.mode is None: # first time, skip
+            self.mode = mode
+            return True
+        elif self.mode != mode:
+            self.changeCount += 1
+            if self.changeCount > C_CHANGE:
+                self.mode = mode
+                self.changeCount = 0
+                return True
+            return False
+        else:
+            self.changeCount = 0
+            return True
 
     def OnUpdate( self , context , event ) :
         if event.type == 'MOUSEMOVE':
             vec = self.mouse_pos - self.preMousePos
             self.preMousePos = self.mouse_pos
+
+            if vec.length < C_HAND_NOISE: # consider as noise, else will cause brush size change
+                return 'RUNNING_MODAL'
+
             nrm = vec.normalized()
-            ang = 0.8
+            ang = math.radians(45) # angle
+
             if nrm.x > ang or nrm.x < -ang :
-                self.radius = self.radius + vec.x
-                self.radius = min( max( 50 , self.radius ) , 500 )
-                self.preferences.brush_size = display.dot_to_mm( self.radius )
+                if self.AttemptChangeMode('radius'):
+                    self.radius = self.radius + vec.x
+                    self.radius = min( max( 50 , self.radius ) , 500 )
+                    self.preferences.brush_size = display.dot_to_mm( self.radius )
 
             if nrm.y > ang or nrm.y < -ang :
-                self.strength = self.strength + vec.y / self.radius
-                self.strength = min( max( 0 , self.strength ) , 1 )
-                self.preferences.brush_strength = self.strength
+                if self.AttemptChangeMode('strength'):
+                    self.strength = self.strength + vec.y / self.radius
+                    self.strength = min( max( 0 , self.strength ) , 1 )
+                    self.preferences.brush_strength = self.strength
 
-        elif event.type == self.rootTool.buttonType : 
+        elif event.type == self.rootTool.buttonType :
             if event.value == 'RELEASE' :
                 x = int(self.PressPrevPos.x)
                 y = int(self.PressPrevPos.y)
