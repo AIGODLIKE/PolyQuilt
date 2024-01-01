@@ -19,6 +19,8 @@ import bmesh
 import copy
 import bpy_extras
 import collections
+from bpy.app.translations import pgettext_iface as p_
+
 from ..utils import pqutil
 from ..utils import draw_util
 from ..QMesh import *
@@ -93,8 +95,8 @@ class SubToolBrushSize(SubToolEx) :
     def OnDraw( self , context  ) :
         draw_util.draw_circle2D( self.startMousePos , self.radius * self.strength , color = (1,0.25,0.25,0.5), fill = False , subdivide = 64 , dpi= False )
         draw_util.draw_circle2D( self.startMousePos , self.radius , color = (1,1,1,1), fill = False , subdivide = 64 , dpi= False )
-        draw_util.DrawFont( "Strenght = " + '{:.0f}'.format(self.strength * 100) , 10 , self.startMousePos , (0,0) )
-        draw_util.DrawFont( "Radius = " + '{:.0f}'.format(self.radius ) , 10 , self.startMousePos , (0,-8) )
+        draw_util.DrawFont( f"{p_('Strength')} = " + '{:.0f}'.format(self.strength * 100) , 10 , self.startMousePos , (0,0) )
+        draw_util.DrawFont( f"{p_('Radius')} = " + '{:.0f}'.format(self.radius ) , 10 , self.startMousePos , (0,-8) )
 
     def OnDraw3D( self , context  ) :
         pass
