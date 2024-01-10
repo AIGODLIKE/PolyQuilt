@@ -14,7 +14,7 @@
 bl_info = {
     "name": "PolyQuilt",
     "author": "Sakana3, Dangry, Atticus",
-    "version": (1, 5, 2),
+    "version": (1, 5, 3),
     "blender": (4, 0, 0),
     "location": "View3D > Edit Mode > Tool:PolyQuilt",
     "description": "Lowpoly Tool",
