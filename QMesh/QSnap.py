@@ -78,6 +78,7 @@ class QSnap :
         objects_array = context.visible_objects.copy()
         if context.object in objects_array:
             objects_array.remove(context.object)
+        objects_array.filter(lambda obj: obj.type == 'MESH')
         return objects_array
 
     def create_tree( self , context ) :
