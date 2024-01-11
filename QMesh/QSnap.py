@@ -75,10 +75,9 @@ class QSnap :
 
     @staticmethod
     def snap_objects( context ) :
-        active_obj = context.active_object        
-        objects = context.visible_objects
-#           objects = context.selected_objects
-        objects_array = [obj for obj in objects if obj != active_obj and obj.type == 'MESH']
+        objects_array = context.visible_objects.copy()
+        if context.object in objects_array:
+            objects_array.remove(context.object)
         return objects_array
 
     def create_tree( self , context ) :
