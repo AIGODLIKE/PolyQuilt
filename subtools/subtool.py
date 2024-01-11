@@ -47,7 +47,7 @@ class SubToolRoot :
         return True
 
     def Active(self) :
-        return self if self.activeSubTool == None else self.activeSubTool
+        return self if self.activeSubTool is None else self.activeSubTool
 
     @classmethod
     def GetCursor(cls) :
@@ -100,12 +100,12 @@ class SubToolRoot :
         if ret == 'PASS_THROUGH' :
             ret = 'RUNNING_MODAL'
 
-        if ret == None or not self.singleton :
+        if ret is None or not self.singleton :
             if self.OnForcus(context , event) :            
                 ret = self.OnUpdate(context,event)
                 if self.__enterySubTool != None :
                     sub = self.do_subtool( context , event )
-                    ret = ret if sub == None else sub
+                    ret = ret if sub is None else sub
             else :
                 return 'PASS_THROUGH'
 

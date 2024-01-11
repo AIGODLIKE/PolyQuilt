@@ -65,7 +65,7 @@ class ButtonEventUtil :
 
     @property
     def presureValue(self) -> float :  
-        if self.Presure == False :
+        if self.Presure is False :
             return 0.0
         else :
             lpt = self.preferences.longpress_time
@@ -174,7 +174,7 @@ class ButtonEventUtil :
             ret = self.eventFunc( self)
             self.event = None
             if ret :
-                if result == None :
+                if result is None :
                     return ret
                 elif result == MBEventResult.Quit :
                     return MBEventResult.Quit

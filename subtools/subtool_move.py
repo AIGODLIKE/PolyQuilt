@@ -73,7 +73,7 @@ class SubToolMove(SubTool) :
             self.is_snap = False
             if self.operator.is_snap :
                 dist = self.preferences.distance_to_highlight
-                if self.currentTarget.isVert and self.move_component_module.move_ray == None :# and ( self.currentTarget.element.is_manifold is False or self.currentTarget.element.is_boundary )  :
+                if self.currentTarget.isVert and self.move_component_module.move_ray is None :# and ( self.currentTarget.element.is_manifold is False or self.currentTarget.element.is_boundary )  :
                     self.snapTarget = self.bmo.PickElement( self.mouse_pos , dist , self.ignoreSnapTarget , elements = ['VERT'] )
 
                     if self.snapTarget.isVert \
@@ -99,7 +99,7 @@ class SubToolMove(SubTool) :
                                 self.currentTarget.element.co = self.bmo.zero_pos(mp)
                                 self.is_snap = True
 
-                elif self.currentTarget.isEdge and self.move_component_module.move_ray == None :
+                elif self.currentTarget.isEdge and self.move_component_module.move_ray is None :
                     self.snapTarget = self.bmo.PickElement( self.mouse_pos , dist , edgering=True , backface_culling = True , elements=['EDGE'] , ignore=self.ignoreSnapTarget ) 
                     if self.snapTarget.isEdge :
                         p0 = self.bmo.local_to_2d( self.currentTarget.element.verts[0].co )

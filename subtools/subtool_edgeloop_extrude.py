@@ -106,7 +106,7 @@ class SubToolEdgeLoopExtrude(MainTool) :
                     self.verts[v] = pos_tbl[v]
             
             self.snapTarget = ElementItem.Empty()
-            if self.currentTarget.element and self.is_center_snap == False :
+            if self.currentTarget.element and self.is_center_snap is False :
                 snapTarget = self.bmo.PickElement( self.mouse_pos , dist , edgering=True , backface_culling = True , elements=['EDGE'] , ignore=self.ignoreEdges )       
                 if snapTarget.isEdge and snapTarget.element != self.currentTarget.element :
                     self.snapTarget = snapTarget
@@ -204,7 +204,7 @@ class SubToolEdgeLoopExtrude(MainTool) :
         newFaces = []
         for edge in self.currentTarget.loops :
             t = [ self.verts[v] for v in edge.verts ]
-            if  t[0] == None and t[1] == None :
+            if  t[0] is None and t[1] is None :
                 continue
             verts = [ v for v in (edge.verts[0],edge.verts[1],t[1],t[0]) if v != None ]
             cm = all( [ v in self.move_component_module.center_verts for v in edge.verts ] )

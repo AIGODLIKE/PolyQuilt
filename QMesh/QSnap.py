@@ -43,10 +43,10 @@ class QSnap :
 
     @classmethod
     def is_active( cls ) :
-        if cls.instance == None :
+        if cls.instance is None :
             return False
 
-        if cls.instance.bvh_list == None :
+        if cls.instance.bvh_list is None :
             return False
 
         return True
@@ -63,7 +63,7 @@ class QSnap :
     def __update( self , context ) :
         if context.scene.tool_settings.use_snap \
             and 'FACE' in context.scene.tool_settings.snap_elements :
-                if self.bvh_list == None :
+                if self.bvh_list is None :
                     self.create_tree(context)
                 else :
                     if set( self.bvh_list.keys() ) != set(self.snap_objects(context)) :
@@ -82,7 +82,7 @@ class QSnap :
         return objects_array
 
     def create_tree( self , context ) :
-        if self.bvh_list == None :
+        if self.bvh_list is None :
             self.bvh_list = {}
             for obj in self.snap_objects(context):
                 bvh = mathutils.bvhtree.BVHTree.FromObject(obj, context.evaluated_depsgraph_get() , epsilon = 0.0 )
@@ -99,7 +99,7 @@ class QSnap :
     def view_adjust( cls , world_pos : mathutils.Vector ) -> mathutils.Vector :
         if cls.instance != None :
             ray = pqutil.Ray.from_world_to_screen( bpy.context , world_pos )
-            if ray == None :
+            if ray is None :
                 return world_pos
             location , norm , obj = cls.instance.__raycast( ray )
             if location != None :
@@ -110,7 +110,7 @@ class QSnap :
     def screen_adjust( cls , coord : mathutils.Vector ) -> mathutils.Vector :
         if cls.instance != None :
             ray = pqutil.Ray.from_screen( bpy.context , coord )
-            if ray == None :
+            if ray is None :
                 return None
             location , norm , obj = cls.instance.__raycast( ray )
             if location != None :
@@ -134,7 +134,7 @@ class QSnap :
         if cls.instance != None :
             ray = pqutil.Ray( world_pos , world_normal )
             location , norm , index = cls.instance.__raycast_double( ray )
-            if location == None :
+            if location is None :
                 location , norm , index = cls.instance.__find_nearest( world_pos )
             if location != None :
                 if is_fix_to_x_zero and QMeshOperators.is_x_zero_pos(location) :
@@ -185,7 +185,7 @@ class QSnap :
         dist = bpy.context.scene.tool_settings.double_threshold
         if cls.instance != None :
             ray = pqutil.Ray.from_world_to_screen( bpy.context , world_pos )
-            if ray == None :
+            if ray is None :
                 return False
             hit , normal , face = cls.instance.__raycast( ray )
             if hit != None :
@@ -238,7 +238,7 @@ class QSnap :
 
         location_i , normal_i , face_i = self.__raycast( ray )
 
-        if face_i == None or face_r == None :
+        if face_i is None or face_r is None :
             if face_i != None :
                 return location_i , normal_i , face_i
             elif face_r != None :

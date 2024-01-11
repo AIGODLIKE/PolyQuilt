@@ -134,7 +134,7 @@ class MESH_OT_PolyQuilt_Gpenci_Tools(Operator) :
                         layer = l
                         break
             else :
-                layer = gp.layers.new(layer_name , set_active = gp.layers.active == None )
+                layer = gp.layers.new(layer_name , set_active = gp.layers.active is None )
                 gp.layers.active = layer
 
         return layer
@@ -256,7 +256,7 @@ class MESH_OT_GPencil_2_Edge(Operator) :
             segment = preferences.line_segment_length
             self.segment_length = segment
 
-        if self.strokes == None :
+        if self.strokes is None :
             self.strokes = []
             for layer in gp.layers :
                 if "PolyQuilt" in layer.info :

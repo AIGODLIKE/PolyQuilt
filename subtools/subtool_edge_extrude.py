@@ -56,7 +56,7 @@ class SubToolEdgeExtrude(SubTool) :
 
     @staticmethod
     def Check( root ,target ) :
-        return target.element.is_boundary or target.element.is_manifold == False
+        return target.element.is_boundary or target.element.is_manifold is False
 
     def OnUpdate( self , context , event ) :
         if event.type == 'MOUSEMOVE':
@@ -90,7 +90,7 @@ class SubToolEdgeExtrude(SubTool) :
                             self.newEdge = [ self.bmo.local_to_world_pos(l0) , self.bmo.local_to_world_pos(l1) ]
 
                 # スナップする辺を探す
-                if self.is_center_snap == False :
+                if self.is_center_snap is False :
                     self.snapTarget = self.bmo.PickElement( self.mouse_pos , dist , edgering=True , backface_culling = True , elements=['EDGE'] , ignore=self.ignoreEdges )         
                     if self.bmo.is_mirror_mode and self.snapTarget.isEdge and self.currentEdge.is_straddle_x_zero :
                         if not self.snapTarget.is_straddle_x_zero :
@@ -275,7 +275,7 @@ class SubToolEdgeExtrude(SubTool) :
                 else :
                     t[i] = self.newEdge[i]
 
-        if  t[0] == None and t[1] == None :
+        if  t[0] is None and t[1] is None :
             return
 
         verts = [ v for v in (edge.verts[0],edge.verts[1],t[1],t[0]) if v != None ]

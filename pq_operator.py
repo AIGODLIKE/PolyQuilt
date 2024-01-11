@@ -181,11 +181,11 @@ class MESH_OT_poly_quilt_base(bpy.types.Operator):
             self.bmo = None
             PQ_GizmoGroup_Base.running_polyquilt = False
 
-        if context.region == None :
+        if context.region is None :
             self.report({'WARNING'}, "Oops!context.region is None!Cancel operation:(" )
             return {'CANCELLED'}            
 
-        if self.bmo.CheckValid(context) == False :
+        if self.bmo.CheckValid(context) is False :
             self.report({'WARNING'}, "Oops!Data black was broken! Cancel operation:(" )
             return {'CANCELLED'}            
 
@@ -252,7 +252,7 @@ class MESH_OT_poly_quilt_base(bpy.types.Operator):
         MESH_OT_poly_quilt.__cur_timr = time.time()
 
         self.preferences = context.preferences.addons[__package__].preferences
-        if context.region == None :
+        if context.region is None :
             self.report({'WARNING'}, "Oops!context.region is None!Cancel operation:(" )
             return {'CANCELLED'}            
 
@@ -262,11 +262,11 @@ class MESH_OT_poly_quilt_base(bpy.types.Operator):
 
         if context.area.type == 'VIEW_3D' and context.mode == 'EDIT_MESH' :
             self.preselect = PQ_GizmoGroup_Base.get_gizmo( context.region_data )
-            if self.preselect == None or self.preselect.bmo  == None :
+            if self.preselect is None or self.preselect.bmo  is None :
                 self.report({'WARNING'}, "Gizmo Error" )
                 return {'CANCELLED'}            
 
-            if self.preselect.currentElement == None :
+            if self.preselect.currentElement is None :
                 return {'CANCELLED'} 
 
 
@@ -281,7 +281,7 @@ class MESH_OT_poly_quilt_base(bpy.types.Operator):
             element = self.preselect.currentElement
             self.currentTarget = element
 
-            if element == None or ( element.isEmpty == False and element.is_valid == False ) :
+            if element is None or ( element.isEmpty is False and element.is_valid is False ) :
                 self.report({'WARNING'}, "Invalid Data..." )
                 return {'CANCELLED'}
 

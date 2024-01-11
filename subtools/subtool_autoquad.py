@@ -193,9 +193,9 @@ class SubToolAutoQuad(SubToolEx) :
         e0 = cls.FindBoundaryEdge( edge , v0 , is_x_zero )
         e1 = cls.FindBoundaryEdge( edge , v1 , is_x_zero )
 
-        if e0 == None and e1 != None :
+        if e0 is None and e1 != None :
             return cls.Make_Isosceles_Trapezoid( edge ,e1, v1 , is_x_zero )
-        if e0 != None and e1 == None :
+        if e0 != None and e1 is None :
             return cls.Make_Isosceles_Trapezoid( edge ,e0, v0 , is_x_zero )
 
         if e0 and e1:

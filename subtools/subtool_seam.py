@@ -138,7 +138,7 @@ class SubToolSeam(MainTool) :
 
         if not edge.seam :
             def check_func( edge , vert ) :
-                return any( [ e.seam for e in vert.link_edges if e != edge ] ) == False
+                return any( [ e.seam for e in vert.link_edges if e != edge ] ) is False
             loop , v = bmo.calc_edge_loop( edge , check_func )
         else :
             def find_loop( start , head ) :

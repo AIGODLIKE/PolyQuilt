@@ -211,7 +211,7 @@ class SubToolEdgeLoopCut(MainTool) :
                 face = startFace
                 edge = startEdge[0]
                 for i in range(0,4096) :              
-                    if( face == None or edge == None  ) :
+                    if( face is None or edge is None  ) :
                         break
 
                     if edge.index not in check_edges :

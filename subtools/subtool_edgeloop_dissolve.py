@@ -45,7 +45,7 @@ class SubToolEdgeloopDissolve(SubTool) :
             p1 = self.bmo.local_to_2d( self.currentEdge.element.verts[1].co )
             if self.bmo.is_snap2D( self.mouse_pos , p0 ) or self.bmo.is_snap2D( self.mouse_pos , p1 ) :
                 self.is_forcus = True
-                if self.EdgeLoops == None :
+                if self.EdgeLoops is None :
                     self.EdgeLoops , v = self.bmo.calc_edge_loop( self.currentEdge.element )
         return self.is_forcus
 

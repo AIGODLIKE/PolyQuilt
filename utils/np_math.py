@@ -47,7 +47,7 @@ def IntersectLine2DLines2D( line , lines , isRetPoint = True ) :
         v = np.cross( t31 , t21 ) / d
 
     hit = (d != 0) & (u > 0) & (u < 1) & (v > 0) & (v < 1)
-    idx = np.where( hit == True )[0]
+    idx = np.where( hit is True )[0]
 
     if isRetPoint :
         pts = p1 + u[idx].reshape( idx.shape[0] , 1 ) * t21.reshape(1,2)

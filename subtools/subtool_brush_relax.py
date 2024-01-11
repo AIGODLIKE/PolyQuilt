@@ -110,7 +110,7 @@ class SubToolBrushRelax(SubToolEx) :
         def ProjVert( vt ) :
             co = vt.co
             is_occlusion = occlusion_tbl_get(vt)
-            if is_occlusion == None :
+            if is_occlusion is None :
                 is_occlusion = is_target(matrix_world @ co)
                 self.occlusion_tbl[vt] = is_occlusion
 

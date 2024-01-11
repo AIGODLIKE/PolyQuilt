@@ -91,13 +91,13 @@ class QMeshOperators :
 
     @property
     def btree(self):
-        if self.__btree == None :
+        if self.__btree is None :
             self.__btree = bvhtree.BVHTree.FromBMesh(self.bm)
         return self.__btree
 
     @property
     def kdtree(self):
-        if self.__kdtree == None :
+        if self.__kdtree is None :
             size = len(self.bm.verts)
             self.__kdtree = mathutils.kdtree.KDTree(size)
             for i, v in enumerate(self.bm.verts):
@@ -194,7 +194,7 @@ class QMeshOperators :
     def is_x0_snap( self , p  : Vector  ) :
         p0 = pqutil.location_3d_to_region_2d( p )
         p1 = pqutil.location_3d_to_region_2d( self.mirror_pos_w2l(p) )
-        if p0 == None or p1 == None :
+        if p0 is None or p1 is None :
             return False
         dist = display.dot(self.preferences.distance_to_highlight )  
         return ( p0 - p1 ).length <= dist
@@ -209,11 +209,11 @@ class QMeshOperators :
         return [ self.mirror_world_pos(pos) for pos in poss ]
 
     def check_near( self , v0 , v1 ) :
-        if v0 == None or v1 == None :
+        if v0 is None or v1 is None :
             return False
         c0 = pqutil.location_3d_to_region_2d( self.obj.matrix_world @ v0 )
         c1 = pqutil.location_3d_to_region_2d( self.obj.matrix_world @ v1 )        
-        if c0 == None or c1 == None :
+        if c0 is None or c1 is None :
             return False
         radius = display.dot(self.preferences.distance_to_highlight )
         return (c0-c1).length <= radius 
@@ -234,7 +234,7 @@ class QMeshOperators :
     def AddFace( self , verts , normal = None , is_mirror = None ) :
         self.ensure_lookup_table()
         face = self.bm.faces.new( verts )
-        if face == None :
+        if face is None :
             return None
 
         linkCount = 0
@@ -317,7 +317,7 @@ class QMeshOperators :
 
 
     def dissolve_vert( self , vert  , use_verts = False , use_face_split = False , use_boundary_tear = False, dissolve_vert_angle = 180, is_mirror = None  ) :
-        if vert.is_manifold == False :
+        if vert.is_manifold is False :
             self.Remove( vert , is_mirror )
         else :
             verts = [vert,]

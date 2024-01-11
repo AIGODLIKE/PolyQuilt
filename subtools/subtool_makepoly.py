@@ -52,7 +52,7 @@ class SubToolMakePoly(MainTool) :
             self.currentTarget = self.edge_split( startElement )
             self.bmo.UpdateMesh()
         else :
-            if self.bmo.is_mirror_mode and startElement.isVert and self.bmo.is_x_zero_pos( startElement.element.co ) is False and startElement.mirror == None :
+            if self.bmo.is_mirror_mode and startElement.isVert and self.bmo.is_x_zero_pos( startElement.element.co ) is False and startElement.mirror is None :
                 self.bmo.AddVertex( self.bmo.mirror_pos( startElement.element.co ) , False )
                 self.bmo.UpdateMesh()
                 self.currentTarget.setup_mirror()
@@ -64,7 +64,7 @@ class SubToolMakePoly(MainTool) :
         self.targetElement = None
         self.isEnd = False
         self.LMBEvent = ButtonEventUtil('LEFTMOUSE' , self.LMBEventCallback , op )
-        self.mode = op.geometry_type if mode == None else mode
+        self.mode = op.geometry_type if mode is None else mode
         self.EdgeLoops = None
         self.VertLoops = None
         if self.mode == 'VERT' :
@@ -122,14 +122,14 @@ class SubToolMakePoly(MainTool) :
 
                         if self.currentTarget.isVert and self.mode != 'SPLITE' :
                             if self.currentTarget.element not in self.vert_array.verts :
-                                self.isEnd = self.AddVert(self.currentTarget ) == False
+                                self.isEnd = self.AddVert(self.currentTarget ) is False
             self.currentTarget = ElementItem.Empty()                    
         elif event.type == MBEventType.Click :            
             pass
         elif event.type == MBEventType.LongPress :
             if self.vert_array.vert_count <= 1 and self.currentTarget.isVert and self.vert_array.get(-1) != self.currentTarget.element :
                 edge = self.bmo.edges.get( (self.vert_array.get(0) , self.currentTarget.element) )
-                if edge != None and self.EdgeLoops == None :
+                if edge != None and self.EdgeLoops is None :
                     self.EdgeLoops , self.VertLoops = self.bmo.calc_edge_loop( edge )
         elif event.type == MBEventType.LongClick :
             if self.vert_array.vert_count <= 1 :
@@ -169,7 +169,7 @@ class SubToolMakePoly(MainTool) :
                 self.do_splite()
             self.isEnd = True
 
-        if self.isEnd == True :
+        if self.isEnd is True :
             return 'FINISHED'
 
         return 'RUNNING_MODAL'
@@ -252,7 +252,7 @@ class SubToolMakePoly(MainTool) :
 
         if target.element not in self.vert_array.verts :
             if self.bmo.is_mirror_mode :
-                if target.mirror == None and target.is_x_zero is False :
+                if target.mirror is None and target.is_x_zero is False :
                     self.bmo.AddVertex( self.bmo.mirror_pos( target.element.co ) , False )
                     self.bmo.UpdateMesh()
 
@@ -367,7 +367,7 @@ class SubToolMakePoly(MainTool) :
         self.bmo.UpdateMesh()
 
         newItem = ElementItem.FormVert( self.bmo , new_vert )
-        if self.bmo.is_mirror_mode and newItem.mirror == None and newItem.is_x_zero is False :
+        if self.bmo.is_mirror_mode and newItem.mirror is None and newItem.is_x_zero is False :
             self.bmo.AddVertex( self.bmo.mirror_pos( new_vert.co ) , False )
             self.bmo.UpdateMesh()
             newItem.setup_mirror()

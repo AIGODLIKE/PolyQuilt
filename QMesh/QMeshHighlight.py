@@ -112,7 +112,7 @@ class QMeshHighlight :
         rv3d = context.region_data
         pj_matrix = rv3d.perspective_matrix @ self.pqo.obj.matrix_world
         self.checkDirty()
-        if forced == True or pj_matrix != self.current_matrix :
+        if forced is True or pj_matrix != self.current_matrix :
             region = context.region
             height = np.float32( region.height )
             width = np.float32( region.width )
@@ -184,11 +184,11 @@ class QMeshHighlight :
         vts = [ [verts[ viewPosVertIdx[i] ] , viewPosVerts[i] ] for i in ri ]
 
         if edgering :
-            vts = [ v for v in vts if v[0].is_boundary or v[0].is_manifold == False ]
+            vts = [ v for v in vts if v[0].is_boundary or v[0].is_manifold is False ]
 
         if backface_culling :
             ray = pqutil.Ray.from_screen( bpy.context , coord ).world_to_object( self.pqo.obj )
-            vts = [ v for v in vts if v[0].is_manifold == False or v[0].is_boundary or v[0].normal.dot( ray.vector ) < 0 ]
+            vts = [ v for v in vts if v[0].is_manifold is False or v[0].is_boundary or v[0].normal.dot( ray.vector ) < 0 ]
 
         vts = [ v for v in vts if not v[0].hide and v[0] not in ignore ]
 
@@ -255,7 +255,7 @@ class QMeshHighlight :
                 break
             prePos = pos
             if face.hide is False and face not in ignore :
-                if backface_culling == False or face.normal.dot( ray.vector ) < 0 :
+                if backface_culling is False or face.normal.dot( ray.vector ) < 0 :
                     return ElementItem( self.pqo , face , coord , self.pqo.obj.matrix_world @ pos , dist )
                 else :
                     return ElementItem.Empty()
@@ -403,7 +403,7 @@ class QMeshHighlight :
 
 
     def check_hit_element_vert( self , element , mouse_pos ,radius = None ) :
-        if radius == None :
+        if radius is None :
             radius = self.preferences.distance_to_highlight
         radius = display.dot(radius)
 

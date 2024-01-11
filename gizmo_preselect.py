@@ -65,13 +65,13 @@ class PQ_Gizmo_Preselect( bpy.types.Gizmo):
             self.DrawHighlight = None
             return -1
         
-        if self.currentElement == None :
+        if self.currentElement is None :
             self.currentElement = ElementItem.Empty()
 
         self.mouse_pos = mathutils.Vector(location) 
         if context.region == self.region :
             return -1
-        if self.bmo == None :
+        if self.bmo is None :
             self.bmo = QMesh( context.active_object , self.preferences )
         self.bmo.CheckValid( context )
         self.bmo.UpdateView(context)

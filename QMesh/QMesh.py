@@ -50,7 +50,7 @@ class QMesh(QMeshOperators) :
 
     def CheckValid( self , context ) :
         val = super()._CheckValid(context)
-        if val == False or self.invalid :
+        if val is False or self.invalid :
             self.highlight.setDirty()
             self.reload_obj(context)
             self.invalid = False
@@ -73,7 +73,7 @@ class QMesh(QMeshOperators) :
                 select.add('FACE')
             elements = set(elements) & select
 
-        if backface_culling == None :
+        if backface_culling is None :
             backface_culling = self.get_shading(bpy.context).show_backface_culling
         rv3d = bpy.context.region_data
         matrix = rv3d.perspective_matrix
@@ -145,7 +145,7 @@ class QMesh(QMeshOperators) :
                 hitFace = self.highlight.PickFace( coord , ignoreFaces , backface_culling = backface_culling  )
                 # 候補頂点/エッジがないなら面を返す
                 if hitFace.isNotEmpty :
-                    if check_func == None or check_func( hitFace ) :
+                    if check_func is None or check_func( hitFace ) :
                         if QSnap.is_target( hitFace.hitPosition ) :                
                             hitElement = hitFace
         elif hitVert.isNotEmpty and hitEdge.isNotEmpty :

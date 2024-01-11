@@ -196,7 +196,7 @@ class ElementItem :
 
     @property
     def is_straddle_x_zero(self) -> bool :
-        if self.__qmesh.is_mirror_mode and self.__mirror == None and self.element != None :
+        if self.__qmesh.is_mirror_mode and self.__mirror is None and self.element != None :
             if self.element == self.__qmesh.find_mirror( self.element , False ) :
                 return True
         return False
@@ -321,7 +321,7 @@ class ElementItem :
 
         if self.is_valid :
             size = preferences.highlight_vertex_size
-            width = preferences.highlight_line_width if width == None else width
+            width = preferences.highlight_line_width if width is None else width
             alpha = preferences.highlight_face_alpha
             element = self.element
 
@@ -380,7 +380,7 @@ class ElementItem :
         element = self.element    
         with draw_util.push_pop_projection2D() :
             p1 = pqutil.location_3d_to_region_2d( self.hitPosition )
-            if p1 == None :
+            if p1 is None :
                 return
             length = (v0-v1).length
             center = ((v0 + v1 ) / 2)

@@ -120,7 +120,7 @@ class SubToolFinSlice(SubTool) :
                     v0 = links[0].other_vert(vert)
                     v1 = links[1].other_vert(vert)
 
-                    if self.bmo.bm.edges.get( (v0 , v1) ) == None :
+                    if self.bmo.bm.edges.get( (v0 , v1) ) is None :
                         bmesh.utils.face_split( face , v0  , v1 )
         self.bmo.UpdateMesh()
 

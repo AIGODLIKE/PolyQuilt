@@ -117,7 +117,7 @@ class move_component_module :
                         p , _ = QSnap.adjust_point(p)
                 p = im @ p
 
-                if is_center_snap and self.bmo.is_x_zero_pos( initial_pos ) and ( move_center == False or vert not in self.center_verts ) :
+                if is_center_snap and self.bmo.is_x_zero_pos( initial_pos ) and ( move_center is False or vert not in self.center_verts ) :
                     p.x = 0.0
                 elif mirror == vert :
                     p.x = 0.0
@@ -147,7 +147,7 @@ class move_component_module :
             a = { 'FREE' : 'NORMAL' , 'X' : 'FREE' , 'Y' : 'X' , 'Z' : 'Y' , 'NORMAL' : 'Z' }
             self.set_move_type( a[self.move_type] )
         elif event.value == 'PRESS' :
-            if self.repeat == False :
+            if self.repeat is False :
                 if event.type == 'X' :
                     self.set_move_type( 'X' )
                 elif event.type == 'Y' :
@@ -230,7 +230,7 @@ class move_component_module :
 
         hitSide , hp = self.find_slide_side( mouse_pos )
 
-        if hitSide == None :
+        if hitSide is None :
             return None
 
         side = {} 
@@ -309,7 +309,7 @@ class move_component_module :
     @staticmethod
     def check_move_type( target : ElementItem , move_type0  : str, move_type1 : str) -> str :
         move_type = move_type0
-        if move_type1 == None :
+        if move_type1 is None :
             pass
 #            if target.is_hit_center() :
 #                move_type = 'NORMAL'

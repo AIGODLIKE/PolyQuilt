@@ -94,7 +94,7 @@ class SubToolPolyPen(SubTool) :
         wpos = [ self.bmo.obj.matrix_world @ v.co for v in verts ]
         planes = [ pqutil.Plane.from_screen( bpy.context , v ) for v in wpos ]
         vpos = [ pqutil.location_3d_to_region_2d(v) for v in wpos ]
-        if center == None :
+        if center is None :
             center = ( vpos[0] + vpos[1] ) / 2        
         vec = ( vpos[0] - vpos[1] )
         width = vec.length

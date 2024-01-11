@@ -65,7 +65,7 @@ class SubToolDrawPatch(SubTool) :
             if not self.is_loop_stroke :
                 def check( target ) :
                     if target.isVert :
-                        return target.element.select == False
+                        return target.element.select is False
                     return True
                 self.currentTarget = self.bmo.PickElement( self.mouse_pos , self.preferences.distance_to_highlight , elements = ['VERT'] , check_func=check )
                 if self.currentTarget.isVert :
@@ -83,7 +83,7 @@ class SubToolDrawPatch(SubTool) :
                             coord = hit
                             self.plane = pqutil.Plane.from_screen( bpy.context , coord )
                     self.stroke3D.append( coord )
-                if self.is_loop_stroke == None :
+                if self.is_loop_stroke is None :
                     if (self.stroke2D[0] - self.stroke2D[-1] ).length > self.preferences.distance_to_highlight * 4 :
                         self.is_loop_stroke = False
                 elif (self.stroke2D[0] - self.stroke2D[-1] ).length < self.preferences.distance_to_highlight * 2 :
@@ -103,7 +103,7 @@ class SubToolDrawPatch(SubTool) :
     def pick_element( qmesh , location , preferences ) :
         def check( target ) :
             if target.isVert :
-                return target.element.select == False
+                return target.element.select is False
             return True
         element = qmesh.PickElement( location , preferences.distance_to_highlight, elements = ['VERT','EDGE'] , edgering = True , check_func = check )        
         return element
@@ -383,7 +383,7 @@ class SubToolDrawPatch(SubTool) :
         else :
             Geom = bmesh.ops.bridge_loops(bmo.bm, edges = loopPair, use_pairs = False, use_cyclic = False, use_merge = False, merge_factor = 0.0 , twist_offset = 0 )
             newFaces = Geom['faces']
-            if segment != None and divide == None :
+            if segment != None and divide is None :
                 lengths = [ ( bmo.local_to_world_pos( e.verts[0].co ) - bmo.local_to_world_pos( e.verts[1].co )).length for e in Geom['edges'] ]
                 avarage = sum(lengths) / len(lengths)
                 divide = max( 0 , int( avarage / segment ) )
