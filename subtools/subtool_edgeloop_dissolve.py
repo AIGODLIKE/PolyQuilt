@@ -57,7 +57,7 @@ class SubToolEdgeloopDissolve(SubTool) :
                 pass
         elif event.type == 'LEFTMOUSE' :
             if event.value == 'RELEASE' :
-                if self.EdgeLoops != None :
+                if self.EdgeLoops is not None :
 #                   bpy.ops.mesh.select_all(action='DESELECT')
                     self.bmo.dissolve_edges( self.EdgeLoops , use_verts = False , use_face_split = False , dissolve_vert_angle=self.preferences.vertex_dissolve_angle )                    
                     self.bmo.UpdateMesh()
@@ -70,7 +70,7 @@ class SubToolEdgeloopDissolve(SubTool) :
         pass
 
     def OnDraw3D( self , context  ) :
-        if self.EdgeLoops != None :
+        if self.EdgeLoops is not None :
             alpha = self.preferences.highlight_face_alpha
             vertex_size = self.preferences.highlight_vertex_size        
             width = self.preferences.highlight_line_width

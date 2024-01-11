@@ -312,7 +312,7 @@ class QMeshHighlight :
         def Check2( vp ) :
             for l in epos :
                 hit = mathutils.geometry.intersect_line_line_2d( co , vp , l[0], l[1] )
-                if hit != None and (hit - Vector(vp) ).length > 0.001 :
+                if hit is not None and (hit - Vector(vp) ).length > 0.001 :
                     return True
             return False
 
@@ -363,11 +363,11 @@ class QMeshHighlight :
             for edge , (e1,e2) in boundary_edges.items() : 
                 if v not in edge.verts :
                     hit = intersect_line_line_2d( e1 , e2 , p1 , p2 )
-                    if hit != None :
+                    if hit is not None :
                         v1 = matrix @ edge.verts[0].co
                         v2 = matrix @ edge.verts[1].co        
                         wp = pqutil.Ray.from_screen( context , hit ).hit_to_line_pos( v1 , v2 )                                        
-                        if wp != None and QSnap.is_target( wp ) :
+                        if wp is not None and QSnap.is_target( wp ) :
                             return False
             return True
 

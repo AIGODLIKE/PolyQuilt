@@ -33,7 +33,7 @@ class SubToolFaceExtrude(SubToolMove) :
         region = False
         if op.bmo.is_mirror_mode :
             mirror = op.bmo.find_mirror( startTarget.element  )
-            if mirror != None and mirror != startTarget.element:
+            if mirror is not None and mirror != startTarget.element:
                 faces = [startTarget.element , mirror ]
                 if op.preferences.fix_to_x_zero or startTarget.normal.dot(mirror.normal) > 0.999999999 :
                     region = True

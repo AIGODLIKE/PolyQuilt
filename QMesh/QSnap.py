@@ -70,7 +70,7 @@ class QSnap :
                         self.remove_tree()
                         self.create_tree(context)
         else :
-            if self.bvh_list != None :
+            if self.bvh_list is not None :
                 self.remove_tree()
 
     @staticmethod
@@ -88,7 +88,7 @@ class QSnap :
                 self.bvh_list[obj] = bvh
 
     def remove_tree( self ) :
-        if self.bvh_list != None :
+        if self.bvh_list is not None :
             for bvh in self.bvh_list.values():
                 del bvh
         self.bvh_list = None
@@ -96,30 +96,30 @@ class QSnap :
 
     @classmethod
     def view_adjust( cls , world_pos : mathutils.Vector ) -> mathutils.Vector :
-        if cls.instance != None :
+        if cls.instance is not None :
             ray = pqutil.Ray.from_world_to_screen( bpy.context , world_pos )
             if ray is None :
                 return world_pos
             location , norm , obj = cls.instance.__raycast( ray )
-            if location != None :
+            if location is not None :
                 return location
         return world_pos
 
     @classmethod
     def screen_adjust( cls , coord : mathutils.Vector ) -> mathutils.Vector :
-        if cls.instance != None :
+        if cls.instance is not None :
             ray = pqutil.Ray.from_screen( bpy.context , coord )
             if ray is None :
                 return None
             location , norm , obj = cls.instance.__raycast( ray )
-            if location != None :
+            if location is not None :
                 return location
         return None
 
 
     @classmethod
     def adjust_point( cls , world_pos : mathutils.Vector , is_fix_to_x_zero = False) :
-        if cls.instance != None :
+        if cls.instance is not None :
             location , norm , index = cls.instance.__find_nearest( world_pos )
             if is_fix_to_x_zero and QMeshOperators.is_x_zero_pos(location) :
                 location.x = 0
@@ -130,12 +130,12 @@ class QSnap :
 
     @classmethod
     def adjust_by_normal( cls , world_pos : mathutils.Vector , world_normal : mathutils.Vector  , is_fix_to_x_zero = False ) :
-        if cls.instance != None :
+        if cls.instance is not None :
             ray = pqutil.Ray( world_pos , world_normal )
             location , norm , index = cls.instance.__raycast_double( ray )
             if location is None :
                 location , norm , index = cls.instance.__find_nearest( world_pos )
-            if location != None :
+            if location is not None :
                 if is_fix_to_x_zero and QMeshOperators.is_x_zero_pos(location) :
                     location.x = 0
                     norm.x = 0
@@ -146,7 +146,7 @@ class QSnap :
 
     @classmethod
     def adjust_local( cls , matrix_world : mathutils.Matrix , local_pos : mathutils.Vector , is_fix_to_x_zero ) :
-        if cls.instance != None :
+        if cls.instance is not None :
             location , norm , index = cls.instance.__find_nearest( matrix_world @ local_pos )
             lp = matrix_world.inverted() @ location
             if is_fix_to_x_zero and QMeshOperators.is_x_zero_pos(local_pos) :
@@ -156,7 +156,7 @@ class QSnap :
 
     @classmethod
     def adjust_local_to_world( cls , matrix_world : mathutils.Matrix , local_pos : mathutils.Vector , is_fix_to_x_zero ) :
-        if cls.instance != None :
+        if cls.instance is not None :
             location , norm , index = cls.instance.__find_nearest( matrix_world @ local_pos )
             lp = location
             if is_fix_to_x_zero and QMeshOperators.is_x_zero_pos(local_pos) :
@@ -167,13 +167,13 @@ class QSnap :
 
     @classmethod
     def adjust_verts( cls , obj , verts , is_fix_to_x_zero ) :
-        if cls.instance != None and cls.instance.bvh_list :
+        if cls.instance is not None and cls.instance.bvh_list :
             dist = bpy.context.scene.tool_settings.double_threshold                        
             find_nearest =  cls.instance.__find_nearest
             matrix = obj.matrix_world
             for vert in verts :
                 location , norm , index = find_nearest( matrix @ vert.co )
-                if location != None :
+                if location is not None :
                     lp = obj.matrix_world.inverted() @ location
                     if is_fix_to_x_zero and QMeshOperators.is_x_zero_pos(vert.co) :
                         lp.x = 0
@@ -182,12 +182,12 @@ class QSnap :
     @classmethod
     def is_target( cls , world_pos : mathutils.Vector) -> bool :
         dist = bpy.context.scene.tool_settings.double_threshold
-        if cls.instance != None :
+        if cls.instance is not None :
             ray = pqutil.Ray.from_world_to_screen( bpy.context , world_pos )
             if ray is None :
                 return False
             hit , normal , face = cls.instance.__raycast( ray )
-            if hit != None :
+            if hit is not None :
                 v2h = (ray.origin - hit).length
                 v2w = (ray.origin - world_pos).length
 
@@ -230,7 +230,7 @@ class QSnap :
         # ターゲットからビュー方向にレイを飛ばす
         location_r , normal_r , face_r = self.__raycast( ray.invert )
 
-#        if face_r != None :
+#        if face_r is not None :
 #            print(ray.vector.dot( normal_r ))
 #            if ray.vector.dot( normal_r ) < -0.5 :
 #                return location_r , normal_r , face_r
@@ -238,9 +238,9 @@ class QSnap :
         location_i , normal_i , face_i = self.__raycast( ray )
 
         if face_i is None or face_r is None :
-            if face_i != None :
+            if face_i is not None :
                 return location_i , normal_i , face_i
-            elif face_r != None :
+            elif face_r is not None :
                 return location_r , normal_r , face_r
         else :
             if (location_r - ray.origin).length <= (location_i - ray.origin).length :

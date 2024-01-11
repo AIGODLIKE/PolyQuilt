@@ -51,14 +51,14 @@ class SubToolFaceInsert(SubTool) :
                 self.hit_face = hit
             else :
                 self.hit_face = None
-        return self.hit_face != None
+        return self.hit_face is not None
 
     def OnUpdate( self , context , event ) :
         if event.type == 'MOUSEMOVE':
             self.center = None
             self.is_hit_center = False
             self.extrude_dst = 0 
-            if self.hit_face != None :
+            if self.hit_face is not None :
                 l2w = self.bmo.local_to_world_pos
                 self.center = l2w( self.hit_face.element.calc_center_median() )                
                 self.is_hit_center = self.hit_face.is_hit_center()
@@ -74,10 +74,10 @@ class SubToolFaceInsert(SubTool) :
         return 'RUNNING_MODAL'
 
     def OnDraw3D( self , context  ) :
-        if self.center != None :
+        if self.center is not None :
             draw_util.draw_pivots3D( (self.center,) , 1 , self.color_split() )
         l2w = self.bmo.local_to_world_pos
-        faces = [ f for f in ( self.hit_face.element , self.hit_face.mirror ) if f != None ]
+        faces = [ f for f in ( self.hit_face.element , self.hit_face.mirror ) if f is not None ]
 
         if self.is_hit_center :
             for face in faces :

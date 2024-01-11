@@ -39,7 +39,7 @@ class move_component_module :
         self.mirror_set = {}
         self.center_verts = set()
         for geom in geoms :
-            if geom != None :
+            if geom is not None :
                 if isinstance( geom , bmesh.types.BMVert ) :
                     self.verts[geom] = geom.co.copy()
                     if self.bmo.is_x_zero_pos( geom.co ) :
@@ -169,12 +169,12 @@ class move_component_module :
     def move_to( self ,  mouse_pos: mathutils.Vector , change_conponent = True ) -> mathutils.Vector :
         move = mathutils.Vector( (0.0,0.0,0.0) )
 
-        if self.move_ray != None :
+        if self.move_ray is not None :
             ray = pqutil.Ray.from_screen( bpy.context , mouse_pos )
             p0 , p1 , d = self.move_ray.distance( ray )
 
             move = ( p0 - self.move_ray.origin )
-        elif self.move_plane != None :
+        elif self.move_plane is not None :
             rayS = pqutil.Ray.from_screen( bpy.context , self.start_mouse_pos )
             rayG = pqutil.Ray.from_screen( bpy.context , mouse_pos )
             vS = self.move_plane.intersect_ray( rayS )
@@ -282,7 +282,7 @@ class move_component_module :
 
 
     def draw_3D( self , context , mouse_pos = None ) :
-        if self.move_ray != None :
+        if self.move_ray is not None :
             v0 = self.move_ray.origin
             v1 = v0 + self.move_ray.vector * 10000.0 
             v2 = v0 - self.move_ray.vector * 10000.0 
@@ -344,7 +344,7 @@ class move_component_module :
             se = sorce_edge
             dv = dst
             de = snap_edge
-            while( sv != None and dv != None ) :
+            while( sv is not None and dv is not None ) :
                 if sv in pair_verts.keys() or dv in pair_verts.items()  :
                     break
                 pair_verts[sv] = dv

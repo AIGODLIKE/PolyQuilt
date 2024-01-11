@@ -94,7 +94,7 @@ class ElementItem :
 
 
     def setup_mirror( self , mirror = None ) :
-        if mirror != None :
+        if mirror is not None :
             self.__mirror = mirror
         else :
             if self.__qmesh is not None :
@@ -196,7 +196,7 @@ class ElementItem :
 
     @property
     def is_straddle_x_zero(self) -> bool :
-        if self.__qmesh.is_mirror_mode and self.__mirror is None and self.element != None :
+        if self.__qmesh.is_mirror_mode and self.__mirror is None and self.element is not None :
             if self.element == self.__qmesh.find_mirror( self.element , False ) :
                 return True
         return False
@@ -248,7 +248,7 @@ class ElementItem :
     def mirror_loops( self ) :
         if self.isEdge :        
             if not hasattr( self , "__mirror_loop" ) :
-                if self.mirror != None :
+                if self.mirror is not None :
                     self.__mirror_loop = [ t for t , s in [ (self.__qmesh.find_mirror(e,False) , e) for e in self.loops ] if t ]
                 else :
                     self.__mirror_loop = []
@@ -274,7 +274,7 @@ class ElementItem :
     def mirror_rings( self ) :
         if self.isEdge :
             if not hasattr( self , "__mirror_rings" ) :
-                if self.mirror != None :
+                if self.mirror is not None :
                     self.__mirror_rings = [ t for t , s in [ (self.__qmesh.find_mirror(e,False) , e) for e in self.rings ] if t ]
                 else :
                     self.__mirror_rings = []

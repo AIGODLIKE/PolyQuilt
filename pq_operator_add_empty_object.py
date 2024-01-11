@@ -260,7 +260,7 @@ class MESH_OT_GPencil_2_Edge(Operator) :
             self.strokes = []
             for layer in gp.layers :
                 if "PolyQuilt" in layer.info :
-                    if layer.active_frame != None :
+                    if layer.active_frame is not None :
                         for stroke in layer.active_frame.strokes :
                             points =  [ p.co for p in stroke.points ] 
                             self.strokes.append( points )

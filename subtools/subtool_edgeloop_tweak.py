@@ -62,7 +62,7 @@ class SubToolEdgeLoopTweak(MainTool) :
         if event.type == 'MOUSEMOVE':
 
             slide = self.move_component_module.calc_slide( self.mouse_pos )
-            if slide != None :
+            if slide is not None :
                 self.move_component_module.update_geoms_verts( slide )
                 self.bmo.UpdateMesh()
             else :

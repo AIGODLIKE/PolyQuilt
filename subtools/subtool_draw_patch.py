@@ -92,8 +92,8 @@ class SubToolDrawPatch(SubTool) :
                         self.is_loop_stroke = True
         elif event.type == MBEventType.Release :
             div , loop = self.MakeQuad( bpy.context , self.preferences.line_segment_length )
-            self.operator.edge_divide = div if div != None else 0
-            self.operator.redo_info = [ self.execute , [ x for x , t in zip( ['edge_divide' , 'edge_offset' ] ,[ div != None , loop ] ) if t ] ]
+            self.operator.edge_divide = div if div is not None else 0
+            self.operator.redo_info = [ self.execute , [ x for x , t in zip( ['edge_divide' , 'edge_offset' ] ,[ div is not None , loop ] ) if t ] ]
             return MBEventResult.Quit
         return MBEventResult.Do
 
@@ -167,7 +167,7 @@ class SubToolDrawPatch(SubTool) :
         if num == 0 :
             isLoop = self.is_loop_stroke
             loop = self.stroke3D
-            if divide != None :
+            if divide is not None :
                 div = divide
             else :            
                 ttl = sum( (e1-e2).length for e1,e2 in zip( loop[ 0 : len(loop) - 1 ] , loop[ 1 : len(loop) ] ) )
@@ -323,7 +323,7 @@ class SubToolDrawPatch(SubTool) :
                 center = face.calc_center_median()
                 snappos , snapnrm = QSnap.adjust_by_normal( bmo.local_to_world_pos(center) , bmo.local_to_world_nrm(normal) )
                 cnt = cnt + (1 if snapnrm.dot(normal) > 0 else -1)
-            elif view_vector != None :
+            elif view_vector is not None :
                 cnt = cnt - (1 if view_vector.dot(normal) > 0 else -1)
         if cnt < 0 :
             for face in faces :
@@ -335,13 +335,13 @@ class SubToolDrawPatch(SubTool) :
         loopPair = copy.copy(edge1)
         loopPair.extend( edge2 )
 
-        is_wire = all( e.is_wire for e in edge1 + edge2 + (connect1 if connect1 != None else []) + (connect2 if connect2 != None else [])  )
+        is_wire = all( e.is_wire for e in edge1 + edge2 + (connect1 if connect1 is not None else []) + (connect2 if connect2 is not None else [])  )
 #        is_loop = edge1[0].verts[0] in edge1[-1].verts or edge1[0].verts[1] in edge1[-1].verts
 
         hides = []
-        if connect1 != None and connect2 != None :
+        if connect1 is not None and connect2 is not None :
             verts = set()
-            allverts = set( itertools.chain( connect1 if connect1 != None else [] , connect2 if connect2 != None else [] ) )
+            allverts = set( itertools.chain( connect1 if connect1 is not None else [] , connect2 if connect2 is not None else [] ) )
             for e in itertools.chain( edge1 , edge2) :
                 allverts.update( tuple(e.verts) )
             for v in allverts :
@@ -383,7 +383,7 @@ class SubToolDrawPatch(SubTool) :
         else :
             Geom = bmesh.ops.bridge_loops(bmo.bm, edges = loopPair, use_pairs = False, use_cyclic = False, use_merge = False, merge_factor = 0.0 , twist_offset = 0 )
             newFaces = Geom['faces']
-            if segment != None and divide is None :
+            if segment is not None and divide is None :
                 lengths = [ ( bmo.local_to_world_pos( e.verts[0].co ) - bmo.local_to_world_pos( e.verts[1].co )).length for e in Geom['edges'] ]
                 avarage = sum(lengths) / len(lengths)
                 divide = max( 0 , int( avarage / segment ) )

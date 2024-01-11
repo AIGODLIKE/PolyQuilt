@@ -322,7 +322,7 @@ class MESH_OT_poly_quilt_base(bpy.types.Operator):
 
     @staticmethod
     def draw_callback_px(self , context , region_data):
-        if self != None and context.region_data == region_data :
+        if self is not None and context.region_data == region_data :
             if self.preferences.is_debug :
                 font_id = 0  # XXX, need to find out how best to get this.
                 # draw some text

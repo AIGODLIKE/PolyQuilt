@@ -73,7 +73,7 @@ class SubToolSeam(MainTool) :
 
     @classmethod
     def DrawHighlight( cls , gizmo , element ) :
-        if element != None and gizmo.bmo != None :
+        if element is not None and gizmo.bmo is not None :
             width = gizmo.preferences.highlight_line_width
             if element.isEdge and element.element.seam :
                 color = (0,0,0,1)

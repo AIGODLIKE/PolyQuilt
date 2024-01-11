@@ -38,7 +38,7 @@ class SubToolBrushDelete(SubToolEx) :
         self.remove_faces = self.collect_faces( bpy.context , self.startMousePos )
         if self.bmo.is_mirror_mode :
             mirror = { self.bmo.find_mirror( f ) for f in self.remove_faces }
-            mirror = { m for m in mirror if m != None }
+            mirror = { m for m in mirror if m is not None }
             self.remove_faces  = self.remove_faces  | mirror
 
     @staticmethod
@@ -62,7 +62,7 @@ class SubToolBrushDelete(SubToolEx) :
             faces = self.collect_faces( context , self.mouse_pos )
             if self.bmo.is_mirror_mode :
                 mirror = { self.bmo.find_mirror( f ) for f in faces if f not in self.remove_faces }
-                mirror = { m for m in mirror if m != None }
+                mirror = { m for m in mirror if m is not None }
                 self.remove_faces  = self.remove_faces  | mirror
             self.remove_faces = self.remove_faces | faces
 

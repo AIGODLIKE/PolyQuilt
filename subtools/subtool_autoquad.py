@@ -48,7 +48,7 @@ class SubToolAutoQuad(SubToolEx) :
                 self.bmo.UpdateMesh()
                 return vt
 
-        if verts != None :
+        if verts is not None :
             vs = [ makeVert(v) for v in verts ]
             vs = sorted(set(vs), key=vs.index)
             face = self.bmo.AddFace( vs , normal )
@@ -86,7 +86,7 @@ class SubToolAutoQuad(SubToolEx) :
             verts , normal = cls.MakePolyByEdge( element.element , is_x_zero)
         elif element.isEmpty :
             verts , normal = cls.MakePolyByEmpty( gizmo.bmo , gizmo.mouse_pos )
-        if verts != None :
+        if verts is not None :
             col = gizmo.preferences.makepoly_color        
             col = (col[0],col[1],col[2],col[3] * 0.5)            
             mat = gizmo.bmo.obj.matrix_world
@@ -193,9 +193,9 @@ class SubToolAutoQuad(SubToolEx) :
         e0 = cls.FindBoundaryEdge( edge , v0 , is_x_zero )
         e1 = cls.FindBoundaryEdge( edge , v1 , is_x_zero )
 
-        if e0 is None and e1 != None :
+        if e0 is None and e1 is not None :
             return cls.Make_Isosceles_Trapezoid( edge ,e1, v1 , is_x_zero )
-        if e0 != None and e1 is None :
+        if e0 is not None and e1 is None :
             return cls.Make_Isosceles_Trapezoid( edge ,e0, v0 , is_x_zero )
 
         if e0 and e1:
@@ -207,7 +207,7 @@ class SubToolAutoQuad(SubToolEx) :
             p0 = cls.check_z_zero( v0.co , v0.co + cls.CalaTangent(edge,v0) * len , is_x_zero )
             p1 = cls.check_z_zero( v1.co , v1.co + cls.CalaTangent(edge,v1) * len , is_x_zero )
 
-        verts = [ v for v in [v1,v0,p0,p1] if v != None ]
+        verts = [ v for v in [v1,v0,p0,p1] if v is not None ]
 
         return verts , None
 
@@ -226,7 +226,7 @@ class SubToolAutoQuad(SubToolEx) :
             p = cls.check_z_zero( boundary_other_vert.co , Q1 , is_x_zero )
         else :
             p = cls.check_z_zero( edge_other_vert.co , Q1 , is_x_zero )
-        verts = [ v for v in [ edge_other_vert , p , boundary_other_vert , vert ] if v != None ]
+        verts = [ v for v in [ edge_other_vert , p , boundary_other_vert , vert ] if v is not None ]
 
         normal = None
         if edge.link_faces :
@@ -258,7 +258,7 @@ class SubToolAutoQuad(SubToolEx) :
             v = v1
         p = cls.check_z_zero( v.co , p , is_x_zero )
 
-        verts = [ v for v in [v2,vert,v1,p] if v != None ]
+        verts = [ v for v in [v2,vert,v1,p] if v is not None ]
 
         normal = None
         edge = edges[0]

@@ -54,7 +54,7 @@ class SubToolEdgeLoopCut(MainTool) :
     def DrawHighlight( cls , gizmo , target : ElementItem ) :
         mode = gizmo.get_attr("loopcut_mode")
 
-        if target != None and gizmo.bmo != None :
+        if target is not None and gizmo.bmo is not None :
             split_deges , draw_deges , endTriangles , fixCenter = cls.CalcSlice( gizmo.bmo , target.element )
             co = target.world_co
 

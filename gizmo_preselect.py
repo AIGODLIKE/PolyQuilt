@@ -77,7 +77,7 @@ class PQ_Gizmo_Preselect( bpy.types.Gizmo):
         self.bmo.UpdateView(context)
         QSnap.update(context)
 
-        if self.subtool != None :
+        if self.subtool is not None :
             element = self.subtool.pick_element( self.bmo , location , self.preferences )
             element.set_snap_div( self.preferences.loopcut_division )
             if self.subtool.UpdateHighlight( self , element ) :
@@ -87,7 +87,7 @@ class PQ_Gizmo_Preselect( bpy.types.Gizmo):
 
         self.currentElement = element
 
-        if self.subtool != None :
+        if self.subtool is not None :
             self.DrawHighlight = self.subtool.DrawHighlight( self , self.currentElement )
         else :
             self.DrawHighlight = None
@@ -98,7 +98,7 @@ class PQ_Gizmo_Preselect( bpy.types.Gizmo):
         if PQ_GizmoGroup_Base.running_polyquilt  :
             self.DrawHighlight = None
 
-        if self.DrawHighlight != None :
+        if self.DrawHighlight is not None :
             if type(self.DrawHighlight) == list :
                 for drawHighlight in self.DrawHighlight :
                     drawHighlight()
@@ -106,7 +106,7 @@ class PQ_Gizmo_Preselect( bpy.types.Gizmo):
                 self.DrawHighlight()
 
     def refresh( self , context ) :
-        if self.bmo != None :
+        if self.bmo is not None :
             self.invalid = True
             self.currentElement = ElementItem.Empty()
             self.DrawHighlight = None

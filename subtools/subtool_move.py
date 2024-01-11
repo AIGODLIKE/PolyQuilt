@@ -34,7 +34,7 @@ class SubToolMove(SubTool) :
         self.currentTarget = startTarget
         self.currentTarget.set_snap_div( 0 )        
         self.snapTarget = ElementItem.Empty()
-        self.target_orig = { v : v.co.copy()  for v in startTarget.verts if v != None }
+        self.target_orig = { v : v.co.copy()  for v in startTarget.verts if v is not None }
 
         mt = move_component_module.check_move_type( startTarget , op.move_type , move_type )
         self.move_component_module = move_component_module( self.bmo , startTarget , startMousePos , mt , self.preferences.fix_to_x_zero )
@@ -127,7 +127,7 @@ class SubToolMove(SubTool) :
         elif event.type == 'LEFTMOUSE' : 
             if event.value == 'RELEASE' :
                 threshold = bpy.context.scene.tool_settings.double_threshold
-                verts = set( self.move_component_module.mirror_set.keys() ) | set( v for v in self.move_component_module.mirror_set.values() if v != None )
+                verts = set( self.move_component_module.mirror_set.keys() ) | set( v for v in self.move_component_module.mirror_set.values() if v is not None )
                 if self.snapTarget.isVert :
                     verts = verts | self.bmo.find_near(self.bmo.obj.matrix_world @ self.snapTarget.element.co)
                 elif self.snapTarget.isEdge : 

@@ -154,7 +154,7 @@ class SubToolBrushMove(SubToolEx) :
 
         if self.bmo.is_mirror_mode :
             for vert , mirror in self.mirrors.items() :
-                if mirror != None :
+                if mirror is not None :
                     if mirror in self.verts.keys() :
                         ms = self.verts[mirror][1]
                         vs = self.verts[vert][1]

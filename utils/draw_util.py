@@ -355,6 +355,6 @@ class push_pop_projection2D:
     def __exit__(self, exc_type, exc_value, traceback):
         gpu.matrix.pop()
         gpu.matrix.pop_projection()
-        if (exc_type != None):
+        if (exc_type is not None):
             # return True  # To suppress exceptions
             return False  # Propagate exceptions

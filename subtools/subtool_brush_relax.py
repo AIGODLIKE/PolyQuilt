@@ -133,7 +133,7 @@ class SubToolBrushRelax(SubToolEx) :
 
         select_stack.pop()
 
-        return { c[0]: [c[1],c[2]] for c in coords if c != None } 
+        return { c[0]: [c[1],c[2]] for c in coords if c is not None } 
 
 
 
@@ -184,7 +184,7 @@ class SubToolBrushRelax(SubToolEx) :
 
         if self.bmo.is_mirror_mode :
             for vert , mirror in mirrors.items() :
-                if mirror != None :
+                if mirror is not None :
                     if mirror in coords :
                         ms = coords[mirror][0]
                         vs = coords[vert][0]

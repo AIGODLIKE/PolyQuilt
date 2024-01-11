@@ -84,7 +84,7 @@ class SubToolMakePoly(MainTool) :
             if self.currentTarget.element == self.vert_array.get(-1) :
                 self.isEnd = True
             else :
-                if self.EdgeLoops != None :
+                if self.EdgeLoops is not None :
                     self.DoEdgeLoopsRemove( self.EdgeLoops , self.VertLoops )
                     self.EdgeLoops = None
                     self.VertLoops = None
@@ -129,7 +129,7 @@ class SubToolMakePoly(MainTool) :
         elif event.type == MBEventType.LongPress :
             if self.vert_array.vert_count <= 1 and self.currentTarget.isVert and self.vert_array.get(-1) != self.currentTarget.element :
                 edge = self.bmo.edges.get( (self.vert_array.get(0) , self.currentTarget.element) )
-                if edge != None and self.EdgeLoops is None :
+                if edge is not None and self.EdgeLoops is None :
                     self.EdgeLoops , self.VertLoops = self.bmo.calc_edge_loop( edge )
         elif event.type == MBEventType.LongClick :
             if self.vert_array.vert_count <= 1 :
@@ -175,7 +175,7 @@ class SubToolMakePoly(MainTool) :
         return 'RUNNING_MODAL'
 
     def draw_lines( self ,context , v3d , color ) :
-        v3d = [v for v in v3d if v != None ]
+        v3d = [v for v in v3d if v is not None ]
         draw_util.draw_lines3D( context , v3d , color , self.preferences.highlight_line_width )
         if self.bmo.is_mirror_mode :
             color = (color[0] , color[1] , color[2] , color[3] * 0.5)
@@ -228,7 +228,7 @@ class SubToolMakePoly(MainTool) :
 
         draw_util.drawElementsHilight3D( self.bmo.obj  , self.bmo.bm, polyVerts , vertex_size ,width,alpha, self.color_create() )
 
-        if self.EdgeLoops != None :
+        if self.EdgeLoops is not None :
             draw_util.drawElementsHilight3D( self.bmo.obj  , self.bmo.bm, self.EdgeLoops , vertex_size ,width,alpha, self.color_delete() )
 
     def OnDraw( self , context  ) :
@@ -242,7 +242,7 @@ class SubToolMakePoly(MainTool) :
                 pass
             else :
                 text = "Line"                    
-            if text != None :
+            if text is not None :
                 self.LMBEvent.Draw( self.currentTarget.coord , text )
 #       if self.currentTarget.element in self.vert_array.verts:
 #           draw_util.DrawFont( "Finish" , 12 , self.currentTarget.coord , (0,2) )                   
@@ -262,7 +262,7 @@ class SubToolMakePoly(MainTool) :
             # 既に存在する辺ならExit
             if pts > 2 :
                 edge = self.bmo.edges.get( ( self.vert_array.get(0) , self.vert_array.get(-1) ) )
-                if edge != None :
+                if edge is not None :
                     ret = False
             if pts == 2 :
                 same_edges , same_faces = self.CheckSameFaceAndEdge(self.vert_array.get(-2) , self.vert_array.get(-1))
@@ -297,7 +297,7 @@ class SubToolMakePoly(MainTool) :
             elif pts > 3:
                 self.bmo.bm.select_history.discard(self.targetElement)                
                 edge = self.bmo.edges.get( ( self.vert_array.get(0) , self.vert_array.get(-2) ) )
-                if edge != None :
+                if edge is not None :
                     self.bmo.Remove( edge )
                 self.targetElement = self.bmo.AddFace( self.vert_array.verts , pqutil.getViewDir()  )
                 self.targetElement.select_set(True)
@@ -413,7 +413,7 @@ class SubToolMakePoly(MainTool) :
         if splite_end :
             if self.bmo.is_mirror_mode :
                 mirror_face = self.bmo.find_mirror( self.vert_array.faces[-1] , check_same = False )
-                if mirror_face != None :
+                if mirror_face is not None :
                     # 同一面をカットする時
                     if mirror_face == self.vert_array.faces[-1] :
                         edges = self.vert_array.edges

@@ -58,7 +58,7 @@ class SubToolPolyPen(SubTool) :
                     pos = sd.Center + v.normalized() * min( sd.Witdh , v.length )
                     self.endData = self.CalcEnd( pos )
                     self.ReCalcFin(pos)
-                    if self.startData != None and self.endData != None :
+                    if self.startData is not None and self.endData is not None :
                         if v.length >= sd.Witdh :
                             self.MakePoly()
                             continue
@@ -71,7 +71,7 @@ class SubToolPolyPen(SubTool) :
                 pass
         elif event.type == 'LEFTMOUSE' :
             if event.value == 'RELEASE' :
-                if self.endData != None :
+                if self.endData is not None :
                     if (self.startData[-1].Center - self.mouse_pos).length / self.startData[-1].Witdh > 0.2 :
                         self.MakePoly() 
                 return 'FINISHED'
@@ -82,7 +82,7 @@ class SubToolPolyPen(SubTool) :
 
     def OnDraw3D( self , context  ) :
         startData = self.startData[-1]
-        if startData != None and self.endData != None :
+        if startData is not None and self.endData is not None :
             alpha = (startData.Center - self.mouse_pos).length / startData.Witdh
             if alpha >= 0.2 :
                 verts = [ startData.WorldPos[0] , startData.WorldPos[1] , self.endData.WorldPos[1] , self.endData.WorldPos[0] ]
@@ -148,7 +148,7 @@ class SubToolPolyPen(SubTool) :
 
             self.bmo.set_positon( v , p , is_world = True )
 
-            if self.bmo.is_mirror_mode and mirror != None :
+            if self.bmo.is_mirror_mode and mirror is not None :
                 self.bmo.set_positon( mirror , self.bmo.mirror_world_pos( p ) , is_world = True )
             self.bmo.UpdateMesh()
 
@@ -160,7 +160,7 @@ class SubToolPolyPen(SubTool) :
         nv = []
 
         for p , vt in zip( self.endData.WorldPos[::-1] , self.endData.Verts[::-1] ) :
-            if vt != None :
+            if vt is not None :
                 v = vt
             else :
                 v = self.bmo.AddVertexWorld( p )

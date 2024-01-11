@@ -59,7 +59,7 @@ class SubToolCooper(SubTool) :
                         self.bmo.CheckValid( context )
                         self.FillHoleQuad( context , self.operator.edge_slide , self.operator.edge_divide )
                         return 'FINISHED'
-                    if divide != None :
+                    if divide is not None :
                         self.operator.edge_divide = divide
                         self.operator.redo_info = [ execute , ['edge_divide','edge_slide'] ]
             self.isExit = True
@@ -96,7 +96,7 @@ class SubToolCooper(SubTool) :
         if targetLoop and targetVerts[0] == targetVerts[-1] :
             pts = SubToolDrawPatch.calc_new_points( loops ,targetLoop, targetVerts, offset  )
         else :
-            if divide != None :
+            if divide is not None :
                 div = divide
             else :
                 ttl = sum( (e1-e2).length for e1,e2 in zip( loops[ 0 : - 1 ] , loops[ 1 : ] ) )
@@ -157,7 +157,7 @@ class SubToolCooper(SubTool) :
         half1 = math.ceil( seg / 2 )
         half2 = seg - half1
 
-        if divide != None :
+        if divide is not None :
             quad1 = max( 1 , min( half1 - 1 , divide ) )
         else :
             quad1 = min( half1 - 1 , math.ceil( half1 / 2 ) )

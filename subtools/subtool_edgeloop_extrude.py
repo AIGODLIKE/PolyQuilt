@@ -177,10 +177,10 @@ class SubToolEdgeLoopExtrude(MainTool) :
         for e in self.currentTarget.both_loops :
             p = [ self.l2w( v.co ) for v in e.verts ]
             t = [ v2p(e, self.verts[v],False ) for v in e.verts ]
-            polyss = [ [ v for v in (p[0],t[0],t[1],p[1]) if v != None ] ]
+            polyss = [ [ v for v in (p[0],t[0],t[1],p[1]) if v is not None ] ]
             if all( [ v in self.move_component_module.center_verts for v in e.verts ] ) :
                 t = [ v2p(e, self.verts[v],True ) for v in e.verts ]
-                polyss.append( [ v for v in (p[0],t[0],t[1],p[1]) if v != None ] )
+                polyss.append( [ v for v in (p[0],t[0],t[1],p[1]) if v is not None ] )
 
             for polys in polyss :
                 draw_util.draw_Poly3D( self.bmo.obj , polys , self.color_create(0.5), hide_alpha = 0.5  )        
@@ -206,7 +206,7 @@ class SubToolEdgeLoopExtrude(MainTool) :
             t = [ self.verts[v] for v in edge.verts ]
             if  t[0] is None and t[1] is None :
                 continue
-            verts = [ v for v in (edge.verts[0],edge.verts[1],t[1],t[0]) if v != None ]
+            verts = [ v for v in (edge.verts[0],edge.verts[1],t[1],t[0]) if v is not None ]
             cm = all( [ v in self.move_component_module.center_verts for v in edge.verts ] )
             newFaces.append( self.bmo.AddFace( verts , pqutil.getViewDir() , is_mirror = cm ) )
             self.bmo.UpdateMesh()
@@ -214,7 +214,7 @@ class SubToolEdgeLoopExtrude(MainTool) :
         for mirror in [ m for m in self.mirrorEdges if m not in self.currentTarget.loops ] :
             t = [ self.verts[v] for v in mirror.verts ]
 
-            verts = [ v for v in (mirror.verts[0],mirror.verts[1],t[1],t[0]) if v != None ]
+            verts = [ v for v in (mirror.verts[0],mirror.verts[1],t[1],t[0]) if v is not None ]
 
             if set(verts) not in [ { v for v in f.verts } for f in newFaces ] :
                 newFaces.append( self.bmo.AddFace( verts , pqutil.getViewDir() , is_mirror = False ) )

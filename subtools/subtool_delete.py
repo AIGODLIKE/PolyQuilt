@@ -72,7 +72,7 @@ class SubToolDelete(SubToolEx) :
 
     @classmethod
     def DrawHighlight( cls , gizmo , element ) :
-        if element != None and gizmo.bmo != None :
+        if element is not None and gizmo.bmo is not None :
             return element.DrawFunc( gizmo.bmo.obj , gizmo.preferences.delete_color , gizmo.preferences , marker = False , edge_pivot = False )
         return None
 

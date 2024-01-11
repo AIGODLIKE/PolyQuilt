@@ -169,7 +169,7 @@ class ButtonEventUtil :
 
     def OnEvent( self ,event , type : MBEventType , result : MBEventResult ) :
         self.type = type
-        if self.eventFunc != None :
+        if self.eventFunc is not None :
             self.event = event
             ret = self.eventFunc( self)
             self.event = None
@@ -194,13 +194,13 @@ class ButtonEventUtil :
 
     def Draw( self , coord = None , text = None ) :
         if self.presureValue > 0.001 :
-            if coord != None :
+            if coord is not None :
                 draw_util.draw_donuts2D( coord , 3.5 , 0.75 , self.presureValue, (1,1,1,self.presureValue)  )
-                if self.presureComplite and text != None :
+                if self.presureComplite and text is not None :
                     draw_util.DrawFont(text, 12 , coord , (0,4) )
             else:
                 draw_util.draw_donuts2D( self.PressPos , 3.5 , 0.75 , self.presureValue, (1,1,1,self.presureValue)  )
-                if self.presureComplite and text != None :
+                if self.presureComplite and text is not None :
                     draw_util.DrawFont( text , 12 , self.PressPos , (0,4) )            
         return self.presureComplite
 

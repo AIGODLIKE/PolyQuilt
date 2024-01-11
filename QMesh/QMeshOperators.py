@@ -57,7 +57,7 @@ class QMeshOperators :
 
     def reload_obj( self , context ) :
         self.obj = context.active_object
-        if self.obj != None :
+        if self.obj is not None :
             self.mesh = self.obj.data
             self.bm = bmesh.from_edit_mesh(self.mesh)
             self.ensure_lookup_table()
@@ -250,7 +250,7 @@ class QMeshOperators :
             face.normal_flip()
             face.normal_update()           
 
-        if linkCount == 0 and normal != None :
+        if linkCount == 0 and normal is not None :
             face.normal_update()
             dp = face.normal.dot( self.obj.matrix_world.inverted().to_3x3() @ normal )
             if dp > 0.0 :
@@ -261,7 +261,7 @@ class QMeshOperators :
         if self.check_mirror(is_mirror) :
             verts = list(face.verts)[::-1]
             mirror = [ self.find_mirror(v,False) for v in verts  ]
-            mirror = [ m if m != None else self.bm.verts.new( self.mirror_pos(o.co) ) for o,m in zip(verts, mirror) ]
+            mirror = [ m if m is not None else self.bm.verts.new( self.mirror_pos(o.co) ) for o,m in zip(verts, mirror) ]
             self.ensure_lookup_table()
 
             if all(mirror) :
@@ -323,7 +323,7 @@ class QMeshOperators :
             verts = [vert,]
             if self.check_mirror(is_mirror) :
                 mirror = self.find_mirror( vert )
-                if mirror != None :
+                if mirror is not None :
                     verts = [vert,mirror]
 
             other_verts = set()
@@ -384,7 +384,7 @@ class QMeshOperators :
                 removes.add(vert)
                 if self.check_mirror(is_mirror) :
                     mirror = self.find_mirror( vert )
-                    if mirror != None :
+                    if mirror is not None :
                         removes.add(mirror)                
         return list(removes)
 
@@ -477,7 +477,7 @@ class QMeshOperators :
 
             hits = self.kdtree.find_range(co, dist )
 
-            if hits != None :
+            if hits is not None :
                 if len(hits) == 1 :
                     result = self.bm.verts[hits[0][1]] 
                 elif len(hits) > 0 :
@@ -495,7 +495,7 @@ class QMeshOperators :
             mirror_cos = [ self.mirror_pos( v.co ) for v in geom.verts ]
 
             hits = self.kdtree.find_range(mirror_cos[0], dist )
-            if hits != None :
+            if hits is not None :
                 for hit in hits :
                     hitvert = self.bm.verts[hit[1]]                    
                     links = hitvert.link_edges if isinstance( geom , bmesh.types.BMEdge ) else hitvert.link_faces
@@ -570,7 +570,7 @@ class QMeshOperators :
             cur_vert = loop_verts[-1][1]
             loop_verts.pop(-1)
 
-            if check_func != None and not check_func(cur_edge,cur_vert) :
+            if check_func is not None and not check_func(cur_edge,cur_vert) :
                 continue
 
             est_edges = [ e for e in cur_vert.link_edges if check(cur_edge , e) ]

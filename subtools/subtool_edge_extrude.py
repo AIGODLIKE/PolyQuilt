@@ -117,21 +117,21 @@ class SubToolEdgeExtrude(SubTool) :
                         if isinstance( self.newEdge[0] , bmesh.types.BMVert ) and isinstance( self.newEdge[1] , bmesh.types.BMVert ) :
                             if self.currentEdge.element.verts[0].co.x > self.currentEdge.element.verts[1].co.x :
                                 mirror = self.bmo.find_mirror( self.newEdge[0] )
-                                if mirror != None :
+                                if mirror is not None :
                                     self.newEdge[1] = mirror                        
                             else :
                                 mirror = self.bmo.find_mirror( self.newEdge[1] )
-                                if mirror != None :
+                                if mirror is not None :
                                     self.newEdge[0] = mirror                        
                         elif isinstance( self.newEdge[0] , bmesh.types.BMVert ) and isinstance( self.newEdge[1] , mathutils.Vector ) :
                             self.newEdge[1] = self.bmo.local_to_world_pos( self.bmo.mirror_pos( self.newEdge[0].co ) )
                             mirror = self.bmo.find_mirror( self.newEdge[0] )
-                            if mirror != None :
+                            if mirror is not None :
                                 self.newEdge[1] = mirror
                         elif isinstance( self.newEdge[1] , bmesh.types.BMVert ) and isinstance( self.newEdge[0] , mathutils.Vector ) :
                             self.newEdge[0] = self.bmo.local_to_world_pos( self.bmo.mirror_pos( self.newEdge[1].co ) )
                             mirror = self.bmo.find_mirror( self.newEdge[1] )
-                            if mirror != None :
+                            if mirror is not None :
                                 self.newEdge[0] = mirror
 
                     # 両点がスナップするなら辺スナップに変更
@@ -180,8 +180,8 @@ class SubToolEdgeExtrude(SubTool) :
                 else :
                     t[i] = self.bmo.local_to_world_pos(self.newEdge[i].co)
 
-        lines = [ v for v in (p0,t[0],t[1],p1,p0) if v != None ]
-        polys = [ v for v in (p0,t[0],t[1],p1) if v != None ]
+        lines = [ v for v in (p0,t[0],t[1],p1,p0) if v is not None ]
+        polys = [ v for v in (p0,t[0],t[1],p1) if v is not None ]
 
         draw_util.draw_Poly3D( self.bmo.obj , polys , self.color_create(0.5), hide_alpha = 0.5  )        
         draw_util.draw_lines3D( context , lines , self.color_create(1.0) , 2 , primitiveType = 'LINE_STRIP' , hide_alpha = 0 )        
@@ -278,7 +278,7 @@ class SubToolEdgeExtrude(SubTool) :
         if  t[0] is None and t[1] is None :
             return
 
-        verts = [ v for v in (edge.verts[0],edge.verts[1],t[1],t[0]) if v != None ]
+        verts = [ v for v in (edge.verts[0],edge.verts[1],t[1],t[0]) if v is not None ]
 
         normal = pqutil.getViewDir()
 

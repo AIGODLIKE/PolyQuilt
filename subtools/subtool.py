@@ -103,7 +103,7 @@ class SubToolRoot :
         if ret is None or not self.singleton :
             if self.OnForcus(context , event) :            
                 ret = self.OnUpdate(context,event)
-                if self.__enterySubTool != None :
+                if self.__enterySubTool is not None :
                     sub = self.do_subtool( context , event )
                     ret = ret if sub is None else sub
             else :
@@ -119,7 +119,7 @@ class SubToolRoot :
     def do_subtool( self , context , event ) :
         ret = None
 
-        if self.__enterySubTool != None :
+        if self.__enterySubTool is not None :
             self.subTool = self.__enterySubTool
             self.__enterySubTool = None
             for subTool in self.subTool :
@@ -193,7 +193,7 @@ class SubToolRoot :
 
     @classmethod
     def DrawHighlight( cls , gizmo , element ) :
-        if element != None and gizmo.bmo != None :
+        if element is not None and gizmo.bmo is not None :
             return element.DrawFunc( gizmo.bmo.obj , gizmo.preferences.highlight_color , gizmo.preferences )
         return None
 
