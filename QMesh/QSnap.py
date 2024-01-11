@@ -75,11 +75,7 @@ class QSnap :
 
     @staticmethod
     def snap_objects( context ) :
-        objects_array = context.visible_objects.copy()
-        if context.object in objects_array:
-            objects_array.remove(context.object)
-        objects_array.filter(lambda obj: obj.type == 'MESH')
-        return objects_array
+        return list(filter(lambda obj: obj.type == 'MESH' and obj is not context.object, context.visible_objects.copy()))
 
     def create_tree( self , context ) :
         if self.bvh_list is None :
