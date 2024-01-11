@@ -25,7 +25,18 @@ import collections
 import numpy
 from mathutils import *
 
+from bpy_extras.view3d_utils import (region_2d_to_vector_3d,
+                                     region_2d_to_origin_3d,
+                                     region_2d_to_location_3d,)
+from bpy_extras.view3d_utils import location_3d_to_region_2d as loc3d_2_r2d
+
 dpi = bpy.context.preferences.system.dpi / 100
+
+
+def location_3d_to_region_2d(crood:mathutils.Vector)->mathutils.Vector:
+    """wrap method of location_3d_to_region_2d for easy use"""
+    return loc3d_2_r2d(bpy.context.region,bpy.context.region_data,crood)
+
 
 class Plane :
     def __init__( self , origin , vector ) :
@@ -47,8 +58,9 @@ class Plane :
         vector.normalize()
         return Plane( origin , vector )
 
+    @staticmethod
     def from_screen_slice( context , startPos , endPos ) :
-        rv3d = context.region_data   
+        rv3d = context.region_data
         region = context.region
 #       pc = region_2d_to_origin_3d(region, rv3d, startPos)
         no = region_2d_to_vector_3d(region, rv3d, startPos)
@@ -73,7 +85,7 @@ class Plane :
         vector = self.vector
         v = mathutils.geometry.intersect_line_plane( p0 , p1 , origin , vector , False )
 
-        if v == None :
+        if v is None :
             return None
 
         epsilon = 0.001
@@ -122,7 +134,7 @@ class Ray :
 
     @staticmethod
     def from_screen( context , coord : mathutils.Vector) :
-        rv3d = context.region_data   
+        rv3d = context.region_data
         region = context.region
         origin = region_2d_to_origin_3d(region, rv3d, coord)
         vector = region_2d_to_vector_3d(region, rv3d, coord)
@@ -131,7 +143,7 @@ class Ray :
     @staticmethod
     def from_world_to_screen( context , world_pos : mathutils.Vector ) :
         coord = location_3d_to_region_2d(world_pos)
-        if coord == None :
+        if coord is None :
             return None
         return Ray.from_screen( context , coord)
 
@@ -186,11 +198,11 @@ class Ray :
         elif d1 >= dt :
             return 0.0
 
-        return max( 0 , min( 1 , d0 / dt ))        
+        return max( 0 , min( 1 , d0 / dt ))
 
     def hit_to_line_pos( self , v0 , v1 ) :
         h0 , h1 , d = self.distance( Ray( v0 , (v1-v0) ) )
-        if h0 == None :
+        if h0 is None :
             return None
         dt =  (v0-v1).length
         d0 = (v0-h1).length
@@ -201,7 +213,7 @@ class Ray :
             val =  0.0
         else :
             val = d0 / dt
-        
+
         return v0 + (v1-v0) * val
 
     def closest_point( self , c ) :
@@ -223,123 +235,123 @@ def transform_normal( vec : mathutils.Vector , matrix : mathutils.Matrix ) :
     return matrix.transposed().to_3x3() @ vec
 
 
-def region_2d_to_vector_3d(region, rv3d, coord):
-    """
-    Return a direction vector from the viewport at the specific 2d region
-    coordinate.
+# def region_2d_to_vector_3d(region, rv3d, coord):
+#     """
+#     Return a direction vector from the viewport at the specific 2d region
+#     coordinate.
+#
+#     :arg region: region of the 3D viewport, typically bpy.context.region.
+#     :type region: :class:`bpy.types.Region`
+#     :arg rv3d: 3D region data, typically bpy.context.space_data.region_3d.
+#     :type rv3d: :class:`bpy.types.RegionView3D`
+#     :arg coord: 2d coordinates relative to the region:
+#        (event.mouse_region_x, event.mouse_region_y) for example.
+#     :type coord: 2d vector
+#     :return: normalized 3d vector.
+#     :rtype: :class:`mathutils.Vector`
+#     """
+#     from mathutils import Vector
+#
+#     viewinv = rv3d.view_matrix.inverted()
+#     if rv3d.is_perspective:
+#         persinv = rv3d.perspective_matrix.inverted()
+#         width = region.width
+#         height = region.height
+#
+#         out = Vector(((2.0 * coord[0] / width) - 1.0,
+#                       (2.0 * coord[1] / height) - 1.0,
+#                       -0.5
+#                       ))
+#
+#         w = out.dot(persinv[3].xyz) + persinv[3][3]
+#
+#         view_vector = ((persinv @ out) / w) - viewinv.translation
+#     else:
+#         view_vector = -viewinv.col[2].xyz
+#
+#     view_vector.normalize()
+#
+#     return view_vector
+#
+#
+# def region_2d_to_origin_3d(region, rv3d, coord, clamp=None):
+#     viewinv = rv3d.view_matrix.inverted()
+#
+#     if rv3d.is_perspective:
+#         origin_start = viewinv.translation.copy()
+#     else:
+#         persmat = rv3d.perspective_matrix.copy()
+#         dx = (2.0 * coord[0] / region.width) - 1.0
+#         dy = (2.0 * coord[1] / region.height) - 1.0
+#         persinv = persmat.inverted()
+#         origin_start = ((persinv.col[0].xyz * dx) +
+#                         (persinv.col[1].xyz * dy) +
+#                         persinv.translation)
+#
+#         if clamp != 0.0:
+#             if rv3d.view_perspective != 'CAMERA':
+#                 # this value is scaled to the far clip already
+#                 origin_offset = persinv.col[2].xyz
+#                 if clamp is not None:
+#                     if clamp < 0.0:
+#                         origin_offset.negate()
+#                         clamp = -clamp
+#                     if origin_offset.length > clamp:
+#                         origin_offset.length = clamp
+#
+#                 origin_start -= origin_offset
+#
+#     return origin_start
+#
+#
+# def region_2d_to_location_3d(region, rv3d, coord, depth_location):
+#
+#     from mathutils import Vector
+#
+#     coord_vec = region_2d_to_vector_3d(region, rv3d, coord)
+#     depth_location = Vector(depth_location)
+#
+#     origin_start = region_2d_to_origin_3d(region, rv3d, coord)
+#     origin_end = origin_start + coord_vec
+#
+#     if rv3d.is_perspective:
+#         from mathutils.geometry import intersect_line_plane
+#         viewinv = rv3d.view_matrix.inverted()
+#         view_vec = viewinv.col[2].copy()
+#         return intersect_line_plane(origin_start,
+#                                     origin_end,
+#                                     depth_location,
+#                                     view_vec, 1,
+#                                     )
+#     else:
+#         from mathutils.geometry import intersect_point_line
+#         return intersect_point_line(depth_location,
+#                                     origin_start,
+#                                     origin_end,
+#                                     )[0]
+#
+#
+#
+# def location_3d_to_region_2d( coord ) :
+#     region = bpy.context.region
+#     rv3d = bpy.context.region_data
+#     perspective_matrix = rv3d.perspective_matrix
+#
+#     prj = perspective_matrix @ Vector((coord[0], coord[1], coord[2], 1.0))
+#     if prj.w > 0.0:
+#         width_half = region.width / 2.0
+#         height_half = region.height / 2.0
+#
+#         return Vector((width_half + width_half * (prj.x / prj.w),
+#                        height_half + height_half * (prj.y / prj.w),
+#                        ))
+#     else:
+#         return None
 
-    :arg region: region of the 3D viewport, typically bpy.context.region.
-    :type region: :class:`bpy.types.Region`
-    :arg rv3d: 3D region data, typically bpy.context.space_data.region_3d.
-    :type rv3d: :class:`bpy.types.RegionView3D`
-    :arg coord: 2d coordinates relative to the region:
-       (event.mouse_region_x, event.mouse_region_y) for example.
-    :type coord: 2d vector
-    :return: normalized 3d vector.
-    :rtype: :class:`mathutils.Vector`
-    """
-    from mathutils import Vector
-
-    viewinv = rv3d.view_matrix.inverted()
-    if rv3d.is_perspective:
-        persinv = rv3d.perspective_matrix.inverted()
-        width = region.width
-        height = region.height
-
-        out = Vector(((2.0 * coord[0] / width) - 1.0,
-                      (2.0 * coord[1] / height) - 1.0,
-                      -0.5
-                      ))
-
-        w = out.dot(persinv[3].xyz) + persinv[3][3]
-
-        view_vector = ((persinv @ out) / w) - viewinv.translation
-    else:
-        view_vector = -viewinv.col[2].xyz
-
-    view_vector.normalize()
-
-    return view_vector
-
-
-def region_2d_to_origin_3d(region, rv3d, coord, clamp=None):
-    viewinv = rv3d.view_matrix.inverted()
-
-    if rv3d.is_perspective:
-        origin_start = viewinv.translation.copy()
-    else:
-        persmat = rv3d.perspective_matrix.copy()
-        dx = (2.0 * coord[0] / region.width) - 1.0
-        dy = (2.0 * coord[1] / region.height) - 1.0
-        persinv = persmat.inverted()
-        origin_start = ((persinv.col[0].xyz * dx) +
-                        (persinv.col[1].xyz * dy) +
-                        persinv.translation)
-
-        if clamp != 0.0:
-            if rv3d.view_perspective != 'CAMERA':
-                # this value is scaled to the far clip already
-                origin_offset = persinv.col[2].xyz
-                if clamp is not None:
-                    if clamp < 0.0:
-                        origin_offset.negate()
-                        clamp = -clamp
-                    if origin_offset.length > clamp:
-                        origin_offset.length = clamp
-
-                origin_start -= origin_offset
-
-    return origin_start
-
-
-def region_2d_to_location_3d(region, rv3d, coord, depth_location):
-
-    from mathutils import Vector
-
-    coord_vec = region_2d_to_vector_3d(region, rv3d, coord)
-    depth_location = Vector(depth_location)
-
-    origin_start = region_2d_to_origin_3d(region, rv3d, coord)
-    origin_end = origin_start + coord_vec
-
-    if rv3d.is_perspective:
-        from mathutils.geometry import intersect_line_plane
-        viewinv = rv3d.view_matrix.inverted()
-        view_vec = viewinv.col[2].copy()
-        return intersect_line_plane(origin_start,
-                                    origin_end,
-                                    depth_location,
-                                    view_vec, 1,
-                                    )
-    else:
-        from mathutils.geometry import intersect_point_line
-        return intersect_point_line(depth_location,
-                                    origin_start,
-                                    origin_end,
-                                    )[0]
-
-
-
-def location_3d_to_region_2d( coord ) :
-    region = bpy.context.region
-    rv3d = bpy.context.region_data
-    perspective_matrix = rv3d.perspective_matrix
-
-    prj = perspective_matrix @ Vector((coord[0], coord[1], coord[2], 1.0))
-    if prj.w > 0.0:
-        width_half = region.width / 2.0
-        height_half = region.height / 2.0 
-
-        return Vector((width_half + width_half * (prj.x / prj.w),
-                       height_half + height_half * (prj.y / prj.w),
-                       ))
-    else:
-        return None
-
-def TransformBMVerts( obj , verts ) : 
+def TransformBMVerts( obj , verts ) :
     Item = collections.namedtuple('Item', ('vert', 'region' , 'world' ))
     region = bpy.context.region
-    rv3d = bpy.context.region_data    
+    rv3d = bpy.context.region_data
 
     halfW = region.width / 2.0
     halfH = region.height / 2.0
@@ -347,7 +359,7 @@ def TransformBMVerts( obj , verts ) :
     perspective_matrix = rv3d.perspective_matrix
 
     def Proj2( vt ) :
-        w = matrix_world @ vt.co 
+        w = matrix_world @ vt.co
         v = perspective_matrix @ Vector((w[0], w[1], w[2], 1.0))
         t = None if v.w < 0 else Vector( (halfW+halfW*(v.x/v.w) , halfH+halfH*(v.y/v.w) , ))
         return Item( vert = vt , region = t , world = w )
@@ -386,7 +398,7 @@ def MovePointFromRegion( obj , element , orig , pos ):
             vert.co = obj.matrix_world.inverted() @ v
 
     return orig + p
-    
+
 def MakePointFromRegion( obj , bm , pos , pivot : Vector ):
     p = CalcPositionFromRegion( pos , pivot )
     p = obj.matrix_world.inverted() @ p
@@ -397,13 +409,13 @@ def MakePointFromRegion( obj , bm , pos , pivot : Vector ):
 
 
 def CalcRateEdgeRay( obj , context , edge , vert , coord , ray , dist ) :
-    matrix = obj.matrix_world        
+    matrix = obj.matrix_world
     v0 = vert.co
     v1 = edge.other_vert(vert).co
-    p0 = location_3d_to_region_2d( matrix @ v0)
-    p1 = location_3d_to_region_2d( matrix @ v1)
+    p0 = location_3d_to_region_2d(matrix @ v0)
+    p1 = location_3d_to_region_2d(matrix @ v1)
     intersects = mathutils.geometry.intersect_line_sphere_2d( p0 , p1 , coord , dist )
-    if any(intersects) == False:
+    if any(intersects) is False:
         return 0.0
 
     ray = Ray.from_screen( context , coord ).world_to_object( obj )
@@ -417,7 +429,7 @@ def CalcRateEdgeRay( obj , context , edge , vert , coord , ray , dist ) :
     elif d1 > dt :
         return 0.0
     else :
-        return max( 0 , min( 1 , d0 / dt ))        
+        return max( 0 , min( 1 , d0 / dt ))
 
 def sort_edgeloop( loop ) :
     '''
@@ -432,10 +444,10 @@ def sort_edgeloop( loop ) :
     for edge in loop :
         for vert in edge.verts :
             if len( [ e for e in loop if vert in e.verts ] ) == 1 :
-                start_edge = edge 
+                start_edge = edge
                 start_vert = vert
 
-    if start_edge == None :
+    if start_edge is None :
         # ループしている可能性
         start_edge = loop[0]
         start_vert = loop[0].verts[0]
